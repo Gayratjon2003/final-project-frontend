@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;1,900&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    @apply max-w-[1200px] px-[15px] mx-auto;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    @apply text-black dark:text-white
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    @apply text-black dark:text-white
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    @apply text-black dark:text-white
+}
+
+input {
+    @apply dark:text-white border-2 !border-white;
+}
+.login-input{
+    @apply dark:!border-[2px] dark:!border-[#3b82f6] dark:!border-solid;
+    z-index: 1 !important;
+    border-radius: 5px;
+}
+.hero {
+    height: 100vh;
+    background: url("./assets/images/hero.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.hero-box {
+    height: calc(100vh - 80px);
+}

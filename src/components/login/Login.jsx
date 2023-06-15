@@ -19,7 +19,7 @@ import { LOGIN_URL } from "../../constant";
 import { useDispatch } from "react-redux";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { start, done } from "../../store/loaderSlice";
-
+import { Navbar } from "../index";
 function Copyright(props) {
   return (
     <Typography
@@ -66,10 +66,10 @@ function Login() {
           severity: "success",
         })
       );
-    dispatch(done());
-    localStorage.setItem("token", JSON.stringify(data?.token));
-    localStorage.setItem("id", JSON.stringify(data?._id));
-    navigate("/");
+      dispatch(done());
+      localStorage.setItem("token", JSON.stringify(data?.token));
+      localStorage.setItem("id", JSON.stringify(data?._id));
+      navigate("/");
     } catch (err) {
       console.log(err);
       dispatch(
@@ -78,13 +78,18 @@ function Login() {
           severity: "error",
         })
       );
-    dispatch(done());
+      dispatch(done());
     }
   };
   return (
+    <>
+      <div className="pb-20 bg-red-500">
+      <Navbar />
+      </div>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {/* <Navbar /> */}
         <Box
           sx={{
             marginTop: 8,
@@ -104,26 +109,29 @@ function Login() {
             onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
+            className="bg-white dark:bg-black dark:text-white"
           >
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
               name="email"
               autoComplete="email"
+              placeholder="Email"
               autoFocus
+              className="bg-white dark:bg-black login-input"
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              placeholder="Password"
+              className="bg-white dark:bg-black login-input"
             />
             <Button
               type="submit"
@@ -149,6 +157,7 @@ function Login() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </>
   );
 }
 
