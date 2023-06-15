@@ -18,6 +18,7 @@ import axios from "axios";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { useDispatch } from "react-redux";
 import { done, start } from "../../store/loaderSlice";
+import {Navbar} from "../index";
 
 function Copyright(props) {
   return (
@@ -111,98 +112,107 @@ export default function SignUp() {
     }
   };
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+    <>
+      <div className="pb-20 bg-red-500">
+        <Navbar />
+      </div>
+      <ThemeProvider theme={defaultTheme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Your name"
-                  autoFocus
-                  error={false}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password1"
-                  label="Password"
-                  type="password"
-                  id="password1"
-                  autoComplete="Password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password2"
-                  label="Re-enter password"
-                  type="password"
-                  id="password2"
-                  autoComplete="Re-enter password"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
             >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-start">
-              <Grid item>
-                <Link
-                  variant="body2"
-                  onClick={() => navigate("/login")}
-                  className="cursor-pointer"
-                >
-                  Already have an account? Sign in
-                </Link>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    className="bg-white dark:bg-black login-input"
+                    autoComplete="given-name"
+                    name="name"
+                    required
+                    fullWidth
+                    id="name"
+                    placeholder="Your name"
+                    autoFocus
+                    error={false}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className="bg-white dark:bg-black login-input"
+                    required
+                    fullWidth
+                    id="email"
+                    placeholder="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className="bg-white dark:bg-black login-input"
+                    required
+                    fullWidth
+                    name="password1"
+                    placeholder="Password"
+                    type="password"
+                    id="password1"
+                    autoComplete="Password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className="bg-white dark:bg-black login-input"
+                    required
+                    fullWidth
+                    name="password2"
+                    placeholder="Re-enter password"
+                    type="password"
+                    id="password2"
+                    autoComplete="Re-enter password"
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-start">
+                <Grid item>
+                  <Link
+                    variant="body2"
+                    onClick={() => navigate("/login")}
+                    className="cursor-pointer"
+                  >
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+          <Copyright sx={{ mt: 5 }} />
+        </Container>
+      </ThemeProvider>
+    </>
   );
 }
