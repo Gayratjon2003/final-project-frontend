@@ -29,7 +29,9 @@ p {
     font-weight: 500;
     @apply text-black dark:text-white
 }
-
+h3, span {
+    @apply text-black dark:text-white;
+}
 input {
     @apply dark:text-white border-2 !border-white;
 }
@@ -46,4 +48,7 @@ input {
 }
 .hero-box {
     height: calc(100vh - 80px);
+}
+.login-center {
+    height: calc(100vh - 230px);
 }

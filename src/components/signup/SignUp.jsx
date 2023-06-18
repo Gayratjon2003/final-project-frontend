@@ -18,29 +18,13 @@ import axios from "axios";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { useDispatch } from "react-redux";
 import { done, start } from "../../store/loaderSlice";
-import {Navbar} from "../index";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.gayratjon.uz">
-        Gayratjon.uz
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Navbar, Footer } from "../index";
+import { useTranslation } from "react-i18next";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -116,103 +100,105 @@ export default function SignUp() {
       <div className="pb-20 bg-red-500">
         <Navbar />
       </div>
-      <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
+      <div className="login-center">
+        <ThemeProvider theme={defaultTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    className="bg-white dark:bg-black login-input"
-                    autoComplete="given-name"
-                    name="name"
-                    required
-                    fullWidth
-                    id="name"
-                    placeholder="Your name"
-                    autoFocus
-                    error={false}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className="bg-white dark:bg-black login-input"
-                    required
-                    fullWidth
-                    id="email"
-                    placeholder="Email Address"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className="bg-white dark:bg-black login-input"
-                    required
-                    fullWidth
-                    name="password1"
-                    placeholder="Password"
-                    type="password"
-                    id="password1"
-                    autoComplete="Password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className="bg-white dark:bg-black login-input"
-                    required
-                    fullWidth
-                    name="password2"
-                    placeholder="Re-enter password"
-                    type="password"
-                    id="password2"
-                    autoComplete="Re-enter password"
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                {t("signup.title")}
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 3 }}
               >
-                Sign Up
-              </Button>
-              <Grid container justifyContent="flex-start">
-                <Grid item>
-                  <Link
-                    variant="body2"
-                    onClick={() => navigate("/login")}
-                    className="cursor-pointer"
-                  >
-                    Already have an account? Sign in
-                  </Link>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      className="bg-white dark:bg-black login-input"
+                      autoComplete="given-name"
+                      name="name"
+                      required
+                      fullWidth
+                      id="name"
+                      placeholder={t("signup.name")}
+                      autoFocus
+                      error={false}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      className="bg-white dark:bg-black login-input"
+                      required
+                      fullWidth
+                      id="email"
+                      placeholder={t("signup.email")}
+                      name="email"
+                      autoComplete="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      className="bg-white dark:bg-black login-input"
+                      required
+                      fullWidth
+                      name="password1"
+                      placeholder={t("signup.password")}
+                      type="password"
+                      id="password1"
+                      autoComplete="Password"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      className="bg-white dark:bg-black login-input"
+                      required
+                      fullWidth
+                      name="password2"
+                      placeholder={t("signup.password2")}
+                      type="password"
+                      id="password2"
+                      autoComplete="Re-enter password"
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {t("signup.title")}
+                </Button>
+                <Grid container justifyContent="flex-start">
+                  <Grid item>
+                    <Link
+                      variant="body2"
+                      onClick={() => navigate("/login")}
+                      className="cursor-pointer"
+                    >
+                      {t("signup.haveAccount")}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
             </Box>
-          </Box>
-          <Copyright sx={{ mt: 5 }} />
-        </Container>
-      </ThemeProvider>
+          </Container>
+        </ThemeProvider>
+      </div>
+      <Footer />
     </>
   );
 }

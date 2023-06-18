@@ -1,6 +1,38 @@
 {
   "navbar": {
     "login": "Kirish",
-    "signup": "Ro'yxatdan o'tish"
+    "signup": "Ro'yxatdan o'tish",
+    "search": "Qidirish"
+  },
+  "hero": {
+    "title1": "",
+    "title2": "ga xush kelibsiz, do'stona va ishonchli kitoblar va pochta markalari veb-sayti. Yangi sarguzasht, klassik hikoya yoki nodir xazina qidiryapsizmi, bu yerda sizning didingiz va byudjetingizga mos keladigan narsani topasiz. Badiiy va badiiy adabiyotdan tortib tarix va sanʼatgacha boʻlgan turli janr va mavzulardagi yangi va foydalanilgan kitoblar va pochta markalari toʻplamimizni koʻrib chiqing. Siz qidirayotgan narsani aniq topish uchun muallif, sarlavha yoki kalit so'z bo'yicha ham qidirishingiz mumkin."
+  },
+  "latestItems": {
+    "title": "Yaqinda qo'shilganlar",
+    "addedBy": "Qo'shdi",
+    "on": "sanada"
+  },
+  "largestCollections": {
+    "title": "Eng yirik kolleksiyalar",
+    "volume": "Miqdor",
+    "view": "Ko'rish"
+  },
+  "footer": {
+    "title": "Ushbu sayt yaratuvchisi"
+  },
+  "login": {
+    "title": "Kirish",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "noAccount": "Hisobingiz yo'qmi? Ro'yxatdan o'tish"
+  },
+  "signup": {
+    "title": "Ro'yxatdan o'tish",
+    "name": "Ismingiz",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "password2": "Parolni qayta kiriting",
+    "haveAccount": "Hisobingiz bormi? tizimga kirish"
   }
 }

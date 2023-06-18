@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { switchLang } from "../../store/languageSlice";
+
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -58,24 +61,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const navData = [
-  {
-    id: 1,
-    name: "EN",
-    encode: "en",
-  },
-  {
-    id: 2,
-    name: "UZ",
-    encode: "uz",
-  },
-];
 const Navbar = () => {
+  const { navData, selectedLang } = useSelector((state) => state.language);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [nav, setNav] = useState(false);
   const [showSelect, setShowSelect] = useState(false);
-  const [showSelected, setShowSelected] = useState(navData[0]);
   const [searchText, setSearchText] = useState("");
-  const { t } = useTranslation();
   const changeTheme = (val) => {
     val
       ? localStorage.setItem("theme", "dark")
@@ -95,7 +87,7 @@ const Navbar = () => {
   };
 
   const onSelectClick = (id) => {
-    setShowSelected(navData[id - 1]);
+    dispatch(switchLang(navData[id - 1]));
     changeLanguage(navData[id - 1].encode);
     setShowSelect(false);
   };
@@ -104,7 +96,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-10">
+      <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-10 border-b-[1px] border-green-500">
         <div className="container">
           <div className="navbar-box w-full flex justify-between items-center h-[80px]">
             <div className="left flex items-center">
@@ -121,7 +113,7 @@ const Navbar = () => {
                       className="flex items-center p-2"
                       onClick={() => setShowSelect(!showSelect)}
                     >
-                      <p className="mr-3">{showSelected.name}</p>
+                      <p className="mr-3">{selectedLang.name}</p>
                     </div>
 
                     <div
@@ -158,7 +150,7 @@ const Navbar = () => {
                   <div className="pl-2 flex items-center">
                     <InputBase
                       sx={{ ml: 1, flex: 1 }}
-                      placeholder="Search"
+                      placeholder={t("navbar.search")}
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
                       className="nav-search dark:!text-white w-[200px]"

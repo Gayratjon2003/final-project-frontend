@@ -5,3 +5,7 @@ export { default as Navbar } from "./navbar/Navbar";
 export { default as Hero } from "./hero/Hero";
 export { default as LatestItems } from "./latestItems/LatestItems";
 export { default as Card } from "./card/Card";
+export { default as Card2 } from "./card/Card2";
+export { default as LargestCollections } from "./largestCollections/LargestCollections";
+export { default as Tags } from "./tags/Tags";
+export { default as Footer } from "./footer/Footer";
