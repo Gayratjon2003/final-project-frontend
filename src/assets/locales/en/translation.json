@@ -1,6 +1,38 @@
 {
   "navbar": {
     "login": "Login",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "search": "Search"
+  },
+  "hero": {
+    "title1": "Welcome to",
+    "title2": ", the website of a friendly and reliable of books and post-stamps. Whether you are looking for a new adventure, a classic story, or a rare treasure, you will find something to suit your taste and budget here. Browse through our collection of new and used books and post-stamps in various genres and themes, from fiction and non-fiction to history and art. You can also search by author, title, or keyword to find exactly what you are looking for."
+  },
+  "latestItems": {
+    "title": "Added recently",
+    "addedBy": "Added by",
+    "on": "on"
+  },
+  "largestCollections": {
+    "title": "Largest Collections",
+    "volume": "Volume",
+    "view": "View"
+  },
+  "footer": {
+    "title": "This website created by"
+  },
+  "login": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": "Don't have an account? Sign Up"
+  },
+  "signup": {
+    "title": "Sign up",
+    "email": "Email Address",
+    "name": "Your name",
+    "password": "Password",
+    "password2": "Re-enter password",
+    "haveAccount": "Already have an account? Sign in"
   }
 }

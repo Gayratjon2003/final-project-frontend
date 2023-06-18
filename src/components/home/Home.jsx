@@ -1,12 +1,15 @@
 import React from "react";
-import { Navbar, Hero, LatestItems } from "../index";
+import { Navbar, Hero, LatestItems, LargestCollections, Tags, Footer } from "../index";
 const Home = () => {
   return (
-    <div>
+    <main>
       <Navbar />
       <Hero />
       <LatestItems />
-    </div>
+      <LargestCollections />
+      <Tags />
+      <Footer />
+    </main>
   );
 };
 

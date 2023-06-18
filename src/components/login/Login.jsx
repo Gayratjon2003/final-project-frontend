@@ -19,28 +19,13 @@ import { LOGIN_URL } from "../../constant";
 import { useDispatch } from "react-redux";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { start, done } from "../../store/loaderSlice";
-import { Navbar } from "../index";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.gayratjon.uz">
-        Gayratjon.uz
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Navbar, Footer } from "../index";
+import { useTranslation } from "react-i18next";
 
 const defaultTheme = createTheme();
 
 function Login() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -84,79 +69,80 @@ function Login() {
   return (
     <>
       <div className="pb-20 bg-red-500">
-      <Navbar />
+        <Navbar />
       </div>
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        {/* <Navbar /> */}
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-            className="bg-white dark:bg-black dark:text-white"
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              name="email"
-              autoComplete="email"
-              placeholder="Email"
-              autoFocus
-              className="bg-white dark:bg-black login-input"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              placeholder="Password"
-              className="bg-white dark:bg-black login-input"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+      <div className="login-center">
+        <ThemeProvider theme={defaultTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link
-                  variant="body2"
-                  onClick={() => navigate("/signup")}
-                  className="cursor-pointer"
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                {t("login.title")}
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 1 }}
+                className="bg-white dark:bg-black dark:text-white"
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder={t("login.email")}
+                  autoFocus
+                  className="bg-white dark:bg-black login-input"
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  placeholder={t("login.password")}
+                  className="bg-white dark:bg-black login-input"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+                  {t("login.title")}
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Link
+                      variant="body2"
+                      onClick={() => navigate("/signup")}
+                      className="cursor-pointer"
+                    >
+                      {t("login.noAccount")}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      </div>
+      <Footer />
     </>
   );
 }
