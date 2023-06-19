@@ -18,8 +18,8 @@ import axios from "axios";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { useDispatch } from "react-redux";
 import { done, start } from "../../store/loaderSlice";
-import { Navbar, Footer } from "../index";
 import { useTranslation } from "react-i18next";
+import { changeToken, getUserInfo } from "../../store/userSlice";
 
 const defaultTheme = createTheme();
 
@@ -56,8 +56,8 @@ export default function SignUp() {
               status: "Active",
             },
           });
-          localStorage.setItem("token", JSON.stringify(data?.token));
-          localStorage.setItem("id", JSON.stringify(data?._id));
+          dispatch(changeToken({ token: data?.token }));
+          dispatch(getUserInfo(data?.token));
           dispatch(
             snackbarStart({
               text: "Account created successfully",
@@ -97,10 +97,7 @@ export default function SignUp() {
   };
   return (
     <>
-      <div className="pb-20 bg-red-500">
-        <Navbar />
-      </div>
-      <div className="login-center">
+      <div className="login-center py-20">
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -198,7 +195,6 @@ export default function SignUp() {
           </Container>
         </ThemeProvider>
       </div>
-      <Footer />
     </>
   );
 }

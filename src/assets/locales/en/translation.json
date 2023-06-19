@@ -2,7 +2,9 @@
   "navbar": {
     "login": "Login",
     "signup": "Sign Up",
-    "search": "Search"
+    "search": "Search",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   },
   "hero": {
     "title1": "Welcome to",

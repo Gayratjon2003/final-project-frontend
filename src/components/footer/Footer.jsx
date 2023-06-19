@@ -6,7 +6,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white dark:bg-black h-[80px] border-t-[1px] border-green-500">
+    <footer className="bg-white dark:bg-black h-[80px] border-t-[1px] border-b-[1px] border-green-500 z-10">
       <div className="container">
         <div className="footer-box flex justify-center items-center h-[80px]">
           <p className="text-black ">

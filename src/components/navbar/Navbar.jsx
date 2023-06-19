@@ -13,6 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { switchLang } from "../../store/languageSlice";
+import { clearUser } from "../../store/userSlice";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -63,6 +64,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 const Navbar = () => {
   const { navData, selectedLang } = useSelector((state) => state.language);
+  const { user } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [nav, setNav] = useState(false);
@@ -93,6 +95,9 @@ const Navbar = () => {
   };
   const searchHandle = () => {
     console.log("search: ", searchText);
+  };
+  const gotoDashboard = () => {
+    console.log("Dashboard..");
   };
   return (
     <>
@@ -166,18 +171,36 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <div className="right flex items-center gap-x-3 text-white dark:text-black ">
-              <Link to="/login">
-                <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
-                  {t("navbar.login")}
+            {user?.status === "Active" && (
+              <div className="right flex items-center gap-x-3 text-white dark:text-black">
+                <button
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+                  onClick={gotoDashboard}
+                >
+                   {t("navbar.dashboard")}
                 </button>
-              </Link>
-              <Link to="/signup">
-                <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
-                  {t("navbar.signup")}
+                <button
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+                  onClick={() => dispatch(clearUser())}
+                >
+                  {t("navbar.logout")}
                 </button>
-              </Link>
-            </div>
+              </div>
+            )}
+            {!user?.status && (
+              <div className="right flex items-center gap-x-3 text-white dark:text-black">
+                <Link to="/login">
+                  <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
+                    {t("navbar.login")}
+                  </button>
+                </Link>
+                <Link to="/signup">
+                  <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
+                    {t("navbar.signup")}
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
