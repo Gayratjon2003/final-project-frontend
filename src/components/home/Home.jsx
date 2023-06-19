@@ -3,12 +3,12 @@ import { Navbar, Hero, LatestItems, LargestCollections, Tags, Footer } from "../
 const Home = () => {
   return (
     <main>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
       <LatestItems />
       <LargestCollections />
       <Tags />
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

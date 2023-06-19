@@ -2,7 +2,9 @@
   "navbar": {
     "login": "Kirish",
     "signup": "Ro'yxatdan o'tish",
-    "search": "Qidirish"
+    "search": "Qidirish",
+    "dashboard": "Panel",
+    "logout": "Chiqish"
   },
   "hero": {
     "title1": "",

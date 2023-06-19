@@ -49,6 +49,3 @@ input {
 .hero-box {
     height: calc(100vh - 80px);
 }
-.login-center {
-    height: calc(100vh - 230px);
-}
