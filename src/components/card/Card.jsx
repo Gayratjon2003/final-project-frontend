@@ -8,13 +8,13 @@ const Card = ({
   img,
   title,
   author,
-  user,
+  addedBy,
   createdAt,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="card flex w-[32%] shadow-cardLight dark:shadow-cardDark">
+    <div className="card flex min-w-[350px] w-[32%] shadow-cardLight dark:shadow-cardDark">
       <div className="left overflow-hidden">
         <Link to={itemLink}>
           <img
@@ -38,7 +38,7 @@ const Card = ({
           </div>
           <div>
             <p>
-              {t("latestItems.addedBy")} {user}
+              {t("latestItems.addedBy")} {addedBy}
             </p>
             <p>
               {t("latestItems.on")} <code> {createdAt}</code>

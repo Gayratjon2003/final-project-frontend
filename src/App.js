@@ -1,10 +1,25 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, SignUp, Navbar, Footer, Item, Collection } from "./components";
+import {
+  Home,
+  Login,
+  SignUp,
+  Navbar,
+  Footer,
+  Item,
+  Collection,
+  Dashboard,
+  DashboardUsers,
+  DashboardItems,
+  DashboardCategories,
+  DashboardCollections,
+  SearchResult
+} from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar, Alert, Box, CircularProgress } from "@mui/material";
 import { snackbarDone } from "./store/SnackbarSlice";
-import { getUserInfo } from "./store/userSlice";
+import { changeToken, getUserInfo } from "./store/userSlice";
+import { routes } from "./constant";
 function App() {
   const dispatch = useDispatch();
   const { status, text, severity } = useSelector((state) => state.snackBar);
@@ -27,20 +42,33 @@ function App() {
     }
   }, []);
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (
+      localStorage.getItem("token") !== "undefined" &&
+      localStorage.getItem("token")
+    ) {
+      dispatch(
+        changeToken({ token: JSON.parse(localStorage.getItem("token")) })
+      );
       dispatch(getUserInfo(JSON.parse(localStorage.getItem("token"))));
     }
-  }, []);
+  }, []); 
   return (
     <>
       <div className="App dark:bg-black w-full h-screen">
         <Navbar />
         <Routes>
-          <Route path="/*" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/item/:id" element={<Item />} />
-          <Route path="/collection/:id" element={<Collection />} />
+          <Route path={routes.HOME} element={<Home />} />
+          <Route path={routes.LOGIN} element={<Login />} />
+          <Route path={routes.SIGNUP} element={<SignUp />} />
+          <Route path={routes.ITEM_ID} element={<Item />} />
+          <Route path={routes.SEARCH_RESULT} element={<SearchResult />} />
+          <Route path={routes.COLLECTION_ID} element={<Collection />} />
+          {/* Dashboard */}
+          <Route path={routes.DASHBOARD.HOME} element={<Dashboard />} />
+          <Route path={routes.DASHBOARD.USERS} element={<DashboardUsers />} />
+          <Route path={routes.DASHBOARD.ITEMS} element={<DashboardItems />} />
+          <Route path={routes.DASHBOARD.CATEGORIES} element={<DashboardCategories />} />
+          <Route path={routes.DASHBOARD.COLLECTIONS} element={<DashboardCollections />} />
         </Routes>
         <Footer />
       </div>
@@ -71,7 +99,7 @@ function App() {
               width: "100vw",
               height: "100vh",
               background: "rgba(12,14,48, 0.7)",
-              zIndex: "10",
+              zIndex: "20",
             }}
           >
             <Box sx={{ display: "flex" }}>
