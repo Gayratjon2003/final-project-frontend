@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { switchLang } from "../../store/languageSlice";
 import { clearUser } from "../../store/userSlice";
@@ -61,10 +61,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20 / 2,
   },
 }));
-
 const Navbar = () => {
   const { navData, selectedLang } = useSelector((state) => state.language);
   const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [nav, setNav] = useState(false);
@@ -87,21 +87,24 @@ const Navbar = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-
   const onSelectClick = (id) => {
     dispatch(switchLang(navData[id - 1]));
     changeLanguage(navData[id - 1].encode);
     setShowSelect(false);
   };
   const searchHandle = () => {
-    console.log("search: ", searchText);
+    navigate(`/search/${searchText}`);
   };
   const gotoDashboard = () => {
-    console.log("Dashboard..");
+    navigate("/dashboard");
+  };
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/");
   };
   return (
     <>
-      <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-10 border-b-[1px] border-green-500">
+      <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-20 border-b-[1px] border-green-500">
         <div className="container">
           <div className="navbar-box w-full flex justify-between items-center h-[80px]">
             <div className="left flex items-center">
@@ -177,11 +180,11 @@ const Navbar = () => {
                   className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
                   onClick={gotoDashboard}
                 >
-                   {t("navbar.dashboard")}
+                  {t("navbar.dashboard")}
                 </button>
                 <button
                   className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
-                  onClick={() => dispatch(clearUser())}
+                  onClick={handleLogout}
                 >
                   {t("navbar.logout")}
                 </button>

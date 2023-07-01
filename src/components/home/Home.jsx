@@ -1,14 +1,12 @@
 import React from "react";
-import { Navbar, Hero, LatestItems, LargestCollections, Tags, Footer } from "../index";
+import { Hero, LatestItems, LargestCollections, Tags } from "../index";
 const Home = () => {
   return (
     <main>
-      {/* <Navbar /> */}
       <Hero />
       <LatestItems />
       <LargestCollections />
       <Tags />
-      {/* <Footer /> */}
     </main>
   );
 };

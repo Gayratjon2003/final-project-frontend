@@ -7,6 +7,9 @@
 * {
     font-family: 'Montserrat', sans-serif;
 }
+body {
+    @apply bg-white dark:bg-black;
+}
 
 .container {
     @apply max-w-[1200px] px-[15px] mx-auto;
@@ -29,12 +32,13 @@ p {
     font-weight: 500;
     @apply text-black dark:text-white
 }
-h3, span {
+h3, span, li{
     @apply text-black dark:text-white;
 }
 input {
-    @apply dark:text-white border-2 !border-white;
+    @apply dark:!text-white border-2 !border-white;
 }
+
 .login-input{
     @apply dark:!border-[2px] dark:!border-[#3b82f6] dark:!border-solid;
     z-index: 1 !important;
@@ -48,4 +52,36 @@ input {
 }
 .hero-box {
     height: calc(100vh - 80px);
+}
+.data-grid input {
+    @apply dark:!text-black;
+}
+.data-grid p, .data-grid span, .data-grid input {
+    @apply dark:text-[#676767];
+}
+.MuiDataGrid-menu span, .MuiDataGrid-panelContent span {
+    @apply dark:text-[#676767];
+
+}
+.send-comment {
+    @apply dark:text-white border-2 border-black dark:border-white;
+}
+.category-input {
+    @apply dark:text-white border-2 border-black dark:border-white;
+}
+
+.ql-picker-options span, .ql-picker-label span{
+    color: black;
+}
+.category-input .MuiSvgIcon-root {
+    @apply dark:text-white;
+}
+.custom-free-solo {
+    @apply dark:border-2 dark:border-white;
+}
+.custom-free-solo .MuiSvgIcon-root, .custom-free-solo label {
+    @apply dark:text-white;
+}
+.MuiAutocomplete-popper li{
+    @apply dark:text-black;
 }
