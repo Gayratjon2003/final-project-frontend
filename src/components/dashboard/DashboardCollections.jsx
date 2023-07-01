@@ -101,6 +101,7 @@ const DashboardCollections = () => {
           data: {},
         });
         dispatch(done());
+        handleCancel();
         dispatch(
           snackbarStart({
             text: t("collectionsDashboard.deletedMessage"),
@@ -148,9 +149,8 @@ const DashboardCollections = () => {
               categoryId: categoryValue?.id,
             },
           });
-          getEmpty()
+          handleCancel();
           dispatch(done());
-          setFormStatus(false);
           dispatch(
             snackbarStart({
               text: t("collectionsDashboard.createdMessage"),
@@ -205,8 +205,7 @@ const DashboardCollections = () => {
           },
         });
         dispatch(done());
-        getEmpty();
-        setFormStatus(false);
+        handleCancel();
         dispatch(
           snackbarStart({
             text: t("collectionsDashboard.editedMessage"),
@@ -338,6 +337,7 @@ const DashboardCollections = () => {
     setCategoryValue(null);
     setValue("");
     setImageName("");
+    setSelectedIds([]);
   };
   const handleCancel = () => {
     setFormStatus(false);
