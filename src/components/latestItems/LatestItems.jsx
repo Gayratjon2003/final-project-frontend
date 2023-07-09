@@ -3,10 +3,11 @@ import { Card } from "../index";
 import { useTranslation } from "react-i18next";
 import noImage from "../../assets/images/no-image.jpg";
 import axios from "axios";
-import { GET_LATEST_ITEMS } from "../../constant";
+import { GET_LATEST_ITEMS, routes } from "../../constant";
 import { useDispatch } from "react-redux";
 import { start, done } from "../../store/loaderSlice";
 import { convertTimestamp } from "../../utils/convertTimestamp";
+import { Link } from "react-router-dom";
 
 const LatestItems = () => {
   const { t } = useTranslation();
@@ -48,18 +49,27 @@ const LatestItems = () => {
             <div className="cards flex w-full justify-between">
               {data?.map((item) => (
                 <Card
-                  title={item.name}
+                  title={item?.name}
                   author={item?.author}
                   img={item?.image?.url || noImage}
-                  addedBy={item.addedBy.name}
-                  createdAt={convertTimestamp(item.publishedAt)}
-                  key={item._id}
-                  itemLink={`/item/${item._id}`}
-                  collectionLink={`/collection/${item.collections._id}`}
+                  addedBy={item?.addedBy?.name}
+                  createdAt={convertTimestamp(item?.publishedAt)}
+                  key={item?._id}
+                  itemLink={`/item/${item?._id}`}
+                  collectionLink={`/collection/${item?.collections?._id}`}
                 />
               ))}
             </div>
+            
           </div>
+          <div className="bottom mt-6 flex items-center justify-center">
+              <Link to={routes.ALL_ITEMS}>
+              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
+                {/* {t("navbar.signup")}  */}
+                All Items
+              </button>
+              </Link>
+            </div>
         </div>
       </div>
     </section>

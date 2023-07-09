@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GET_CATEGORIES,
@@ -15,97 +15,37 @@ import { snackbarStart } from "../../store/SnackbarSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UploadIcon from "@mui/icons-material/Upload";
-import { Autocomplete, InputBase, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, Input, InputBase, TextField } from "@mui/material";
 import i18next from "i18next";
 import { renderHTMLCell } from "../../utils/renderHTMLCell";
-
-const DashboardItems = () => {
-  const { token } = useSelector((state) => state.user);
+const DashboardItems = ({ id }) => {
+  const { user, token } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [itemsData, setItemsData] = useState([]);
-  const [categoryData, setCategoryData] = useState([]);
-  const [collectionsData, setCollectionsData] = useState([]);
   const [tagsData, setTagsData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
+  const [collectionsData, setCollectionsData] = useState([]);
   // Create items
   const [formStatus, setFormStatus] = useState(false);
   const [createItems, setCreateItems] = useState(false);
-  const [author, setAuthor] = useState("");
   const [image, setImage] = useState([]);
   const [imageError, setImageError] = useState(false);
   const [imageName, setImageName] = useState("");
   const [name, setName] = useState("");
-  const [value, setValue] = useState("");
-  const [categoryValue, setCategoryValue] = useState(null);
-  const [collectionValue, setCollectionValue] = useState(null);
+  const [author, setAuthor] = useState("");
   const [tagsValue, setTagsValue] = useState([]);
+  const [formEdit, setFormEdit] = useState(false);
+  const [itemsFields, setItemsFields] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [customFields, setCustomFields] = useState([]);
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
 
-   const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("collectionsDashboard.name"),
-      width: 200,
-    },
-    {
-      field: "category",
-      headerName: t("collectionsDashboard.category"),
-      width: 150,
-    },
-    {
-      field: "collection",
-      headerName: t("itemsDashboard.collection"),
-      width: 150,
-    },
-    {
-      field: "desc",
-      headerName: t("collectionsDashboard.desc"),
-      width: 200,
-      renderCell: (params) => renderHTMLCell(params.value),
-    },
-    {
-      field: "tags",
-      headerName: t("itemsDashboard.tags"),
-      width: 150,
-    },
-    {
-      field: "owner",
-      headerName: t("collectionsDashboard.owner"),
-      width: 150,
-    },
-    {
-      field: "publishedAt",
-      headerName: t("collectionsDashboard.publishedAt"),
-      width: 200,
-    },
-  ];
-  const rows = itemsData?.map((item) => {
-    return {
-      id: item?._id,
-      category: item?.category?.name[i18next.language],
-      collection: item?.collections?.name,
-      name: item?.name,
-      desc: item?.description,
-      tags: item?.tags
-        ?.map((item) => `#${item}`)
-        .toString()
-        .replaceAll(",", " "),
-      owner: item?.addedBy?.name,
-      publishedAt: convertTimestamp(item?.publishedAt),
-    };
-  });
   const checkEmptyValues = () => {
-    return (
-      name.trim().length > 1 &&
-      author.trim().length > 1 &&
-      value.trim().length > 1 &&
-      categoryValue?.label?.length > 1 &&
-      collectionValue?.label?.length > 1 &&
-      collectionValue?.label?.length > 1
-    );
+    return name.trim().length > 1 && author.trim().length > 1;
   };
   const deleteItems = () => {
     dispatch(start());
@@ -145,7 +85,7 @@ const DashboardItems = () => {
     dispatch(done());
     setSelectedIds([]);
   };
-  const handleCreateItem = async () => {
+  const handleCreateItem = async (fields) => {
     if (checkEmptyValues()) {
       dispatch(start());
       if (!imageError) {
@@ -161,10 +101,9 @@ const DashboardItems = () => {
               image,
               name: name,
               author: author,
-              categoryId: categoryValue?.id,
-              collectionId: collectionValue?.id,
+              collectionId: id,
               tags: tagsValue,
-              description: value,
+              values: fields,
             },
           });
           handleCancel();
@@ -205,7 +144,8 @@ const DashboardItems = () => {
       );
     }
   };
-  const handleUpdateItem = async () => {
+
+  const handleUpdateItem = async (fields) => {
     if (checkEmptyValues()) {
       dispatch(start());
       try {
@@ -220,10 +160,9 @@ const DashboardItems = () => {
             image,
             name: name,
             author: author,
-            categoryId: categoryValue?.id,
-            collectionId: collectionValue?.id,
+            collectionId: id,
             tags: tagsValue,
-            description: value,
+            values: fields,
           },
         });
         dispatch(done());
@@ -261,10 +200,14 @@ const DashboardItems = () => {
       setImageError(false);
       setFileToBase(file);
     } else {
-      console.log("File must be an image and less than 5 MB ");
+      dispatch(
+        snackbarStart({
+          text: t("collectionsDashboard.imageInfo"),
+          severity: "error",
+        })
+      );
       setImageError(true);
     }
-    console.log(file);
   };
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -277,20 +220,16 @@ const DashboardItems = () => {
     setImage([]);
     setImageName("");
     setName("");
-    setValue("");
     setAuthor("");
-    setCategoryValue(null);
-    setCollectionValue(null);
     setTagsValue([]);
-    setSelectedIds([])
+    setSelectedIds([]);
   };
- 
   const getData = async () => {
     dispatch(start());
     try {
       const { data: data1 } = await axios({
         method: "get",
-        url: `${GET_ITEMS_ADMIN}`,
+        url: `${GET_ITEMS}?collectionId=${id}`,
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -298,6 +237,47 @@ const DashboardItems = () => {
         },
         data: {},
       });
+      setItemsFields(data1);
+      if (
+        Array.isArray(data1[0]?.customFields?.fields) &&
+        data1[0]?.customFields?.fields.length !== 0
+      ) {
+        setColumns(
+          data1[0]?.customFields?.fields?.map((item) => {
+            return {
+              field: item?.name,
+              headerName: item?.label,
+              width: 200,
+            };
+          })
+        );
+      }
+      const newArray = data1?.map((arr) => {
+        const childArray = arr?.customFields?.values?.map((item) => {
+          if (typeof item?.value === "object") {
+            return {
+              [item?.name]: item?.value
+                ?.map((item) => `#${item}`)
+                .toString()
+                .replaceAll(",", " "),
+              width: 200,
+            };
+          } else {
+            return {
+              [item?.name]: item?.value,
+              width: 220,
+            };
+          }
+        });
+        const result = {};
+        for (let obj of childArray) {
+          const key = Object.keys(obj)[0];
+          const value = obj[key];
+          result[key] = value;
+        }
+        return result;
+      });
+      setRows(newArray);
       setItemsData(data1);
       dispatch(done());
     } catch (err) {
@@ -306,44 +286,28 @@ const DashboardItems = () => {
       navigate("/");
     }
   };
-  const getCategories = async () => {
+  const getCollection = async () => {
     dispatch(start());
     try {
-      const { data } = await axios({
+      const { data: data1 } = await axios({
         method: "get",
-        url: `${GET_CATEGORIES}`,
+        url: `${GET_COLLECTION}/${id}`,
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
         },
         data: {},
       });
-      setCategoryData(data);
+      setCollectionsData(data1)
       dispatch(done());
     } catch (err) {
       console.log(err);
       dispatch(done());
+      navigate("/");
     }
   };
-  const getCollections = async () => {
-    dispatch(start());
-    try {
-      const { data } = await axios({
-        method: "get",
-        url: `${GET_COLLECTION}`,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {},
-      });
-      setCollectionsData(data);
-      dispatch(done());
-    } catch (err) {
-      console.log(err);
-      dispatch(done());
-    }
-  };
+
   const getTags = async () => {
     dispatch(start());
     try {
@@ -364,27 +328,34 @@ const DashboardItems = () => {
     }
   };
 
-  const handleAddCategory = () => {
+  const handleAddItem = () => {
     setFormStatus(true);
     setCreateItems(true);
   };
-  const handleEditCategory = () => {
+  const handleEditItem = () => {
     if (selectedIds.length === 1) {
       setFormStatus(true);
       setCreateItems(false);
+      setFormEdit(true);
       const text = itemsData?.find((item) => item._id === selectedIds[0]);
       setName(text?.name);
-      setAuthor(text.author);
-      setCategoryValue({
-        label: text?.category?.name[i18next.language],
-        id: text?.category?._id,
-      });
-      setCollectionValue({
-        label: text?.collections?.name,
-        id: text?.collections?._id,
-      });
+      setAuthor(text?.author);
       setTagsValue(text?.tags);
-      setValue(text?.description);
+    } else {
+      dispatch(
+        snackbarStart({
+          text: "You must select only one element",
+          severity: "error",
+        })
+      );
+    }
+  };
+  const handleViewItem = () => {
+    if (selectedIds.length === 1) {
+      setFormStatus(true);
+      setCreateItems(false);
+      setFormEdit(true);
+      navigate(`/item/${selectedIds[0]}`)
     } else {
       dispatch(
         snackbarStart({
@@ -396,18 +367,15 @@ const DashboardItems = () => {
   };
   useEffect(() => {
     getData();
-    getCategories();
-    getCollections();
     getTags();
+    getCollection();
   }, []);
+  useEffect(()=> {
+    setFields(collectionsData?.fields);
+      setIsOwner(collectionsData?.addedBy?._id === user._id || user?.isAdmin);
+  },[token, collectionsData])
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
-  };
-  const handleOptionChange = (event, newValue) => {
-    setCategoryValue(newValue);
-  };
-  const handleCollectionChange = (event, newValue) => {
-    setCollectionValue(newValue);
   };
   const handleTagsChange = (event, newValue) => {
     setTagsValue(newValue);
@@ -415,54 +383,88 @@ const DashboardItems = () => {
   const handleCancel = () => {
     getEmpty();
     setFormStatus(false);
+    setFormEdit(false);
   };
-  const categoryOptions = categoryData?.map((category) => {
-    return {
-      id: category?._id,
-      label: category?.name[i18next.language],
-    };
-  });
-  const collectionsOptions = collectionsData?.map((collection) => {
-    return {
-      id: collection?._id,
-      label: collection?.name,
-    };
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (e.target.length > 0) {
+      let arr = [];
+      for (let i = 0; i < e.target.length - 1; i++) {
+        if (e.target[i].type !== "checkbox" && e.target[i].name?.length !== 0) {
+          arr.push({
+            type: e.target[i].type,
+            name: e.target[i].name,
+            value: e.target[i].value,
+            label: e.target[i].labels[0]?.textContent,
+          });
+        } else if (
+          e.target[i].type === "checkbox" &&
+          e.target[i].name?.length !== 0
+        ) {
+          arr.push({
+            type: e.target[i].type,
+            name: e.target[i].name,
+            value: e.target[i].checked,
+            label: e.target[i].labels[0]?.textContent,
+          });
+        }
+      }
+      if (formEdit) {
+        handleUpdateItem(arr);
+      } else {
+        handleCreateItem(arr);
+      }
+    }
+  };
+  useEffect(() => {
+    if (itemsFields?.length > 0 && selectedIds[0]) {
+      const newArray = itemsFields?.filter(
+        (item) => item._id === selectedIds[0]
+      );
+      setCustomFields(newArray[0]?.customFields?.values);
+    } else {
+      setCustomFields(fields);
+    }
+  }, [formEdit, itemsFields, fields]);
   return (
     <section className="pt-20 dashboard-users">
       <div className="container">
         <div className="dashboard-users-box">
-          <div className="top mt-10 mb-3">
-            <h1 className="text-3xl text-center">
-              {t("dashboard.collections")}
-            </h1>
-          </div>
+          
           <div className="center mb-12">
-            <div className="top flex gap-x-3 text-white dark:text-black my-3">
-              <button
-                onClick={deleteItems}
-                className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
-              >
-                {t("delete")}
-              </button>
-              <button
-                onClick={handleAddCategory}
-                className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
-              >
-                {t("itemsDashboard.newItem")}
-              </button>
-              <button
-                onClick={handleEditCategory}
-                className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+            {isOwner && (
+              <div className="top flex gap-x-3 text-white dark:text-black my-3">
+                <button
+                  onClick={deleteItems}
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
                 >
-                {t("itemsDashboard.editItem")}
-              </button>
-            </div>
+                  {t("delete")}
+                </button>
+                <button
+                  onClick={handleAddItem}
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+                >
+                  {t("itemsDashboard.newItem")}
+                </button>
+                <button
+                  onClick={handleEditItem}
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+                >
+                  {t("itemsDashboard.editItem")}
+                </button>
+                <button
+                  onClick={handleViewItem}
+                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
+                >
+                  {t("itemsDashboard.viewItem")}
+                </button>
+              </div>
+            )}
             <DataGrid
               rows={rows}
               columns={columns}
-              title={""}
-              checkboxSelection={true}
+              title={t("dashboard.items")}
+              checkboxSelection={isOwner}
               selectedIds={selectedIds}
               sx={{
                 "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
@@ -474,7 +476,10 @@ const DashboardItems = () => {
           </div>
           {formStatus && (
             <div className="form flex justify-center items-center flex-col gap-y-4 py-3">
-              <h1 className="text-center text-3xl">{t("itemsDashboard.item")}</h1>
+              <h1 className="text-center text-3xl">
+                {t("itemsDashboard.item")}
+              </h1>
+              <h1 className="text-center text-3xl">{}</h1>
               <div className="flex gap-y-3 flex-col items-center justify-center">
                 <label htmlFor="upload-image" className="ml-2 cursor-pointer">
                   <div className="w-full h-[200px] rounded-md border-4 border-dashed flex items-center justify-center">
@@ -517,32 +522,6 @@ const DashboardItems = () => {
                   onChange={(e) => setAuthor(e.target.value)}
                   className="category-input max-w-[300px] dark:!text-white w-full p-2.5"
                 />
-                <h2>{t("itemsDashboard.category")}: </h2>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={categoryOptions}
-                  sx={{ width: 300 }}
-                  defaultValue={categoryValue?.label}
-                  onChange={handleOptionChange}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder={t("itemsDashboard.selectCategory")} />
-                  )}
-                  className="category-input bg-white dark:bg-black dark:!text-white"
-                />
-                <h2>{t("itemsDashboard.collection")}: </h2>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={collectionsOptions}
-                  sx={{ width: 300 }}
-                  defaultValue={collectionValue?.label}
-                  onChange={handleCollectionChange}
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder={t("itemsDashboard.selectCollection")} />
-                  )}
-                  className="category-input bg-white dark:bg-black dark:!text-white"
-                />
                 <h2>{t("itemsDashboard.tags")}: </h2>
                 <FreeSolo
                   data={tagsData}
@@ -550,25 +529,126 @@ const DashboardItems = () => {
                   onChange={handleTagsChange}
                   placeholder={t("itemsDashboard.tags")}
                 />
-                <h2>{t("itemsDashboard.description")}: </h2>
-                <Markdown value={value} setValue={setValue} />
               </div>
-              <div className="flex gap-x-3">
-                <button
-                  onClick={createItems ? handleCreateItem : handleUpdateItem}
-                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase text-white dark:text-black"
-                >
-                  {createItems ? t("create") : t("update")}
-                </button>
-                <button
-                  onClick={handleCancel}
-                  className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase text-white dark:text-black"
-                >
-                  {t("cancel")}
-                </button>
-              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col text-black font-bold dark:text-white gap-y-2 mb-3">
+                  {customFields?.map((field) => {
+                    if (field.type === "text") {
+                      return (
+                        <label
+                          aria-label={field.label}
+                          htmlFor={field.name}
+                          key={field.name}
+                          className="flex flex-col items-center"
+                        >
+                          {field.label}
+                          <Input
+                            type="text"
+                            name={field.name}
+                            id={field.name}
+                            placeholder={field.label}
+                            defaultValue={formEdit ? field?.value : ""}
+                            className="category-input max-w-[300px] dark:!text-white w-full p-2.5"
+                          />
+                        </label>
+                      );
+                    } else if (field.type === "textarea") {
+                      return (
+                        <label
+                          aria-label={field.label}
+                          htmlFor={field.name}
+                          key={field.name}
+                          className="flex flex-col items-center"
+                        >
+                          {field.label}
+                          <textarea
+                            name={field.name}
+                            id={field.name}
+                            defaultValue={formEdit ? field?.value : ""}
+                            placeholder={field.label}
+                            className="custom-field-textarea w-[300px] min-h-[100px] p-2 font-normal"
+                          ></textarea>
+                        </label>
+                      );
+                    } else if (field.type === "number") {
+                      return (
+                        <label
+                          aria-label={field.label}
+                          htmlFor={field.name}
+                          key={field.name}
+                          className="flex flex-col items-center"
+                        >
+                          {field.label}
+
+                          <Input
+                            type="number"
+                            name={field.name}
+                            id={field.name}
+                            placeholder={field.label}
+                            defaultValue={formEdit ? field?.value : ""}
+                            className="category-input max-w-[300px] dark:!text-white w-full p-2.5"
+                          />
+                        </label>
+                      );
+                    } else if (field.type === "checkbox") {
+                      return (
+                        <label
+                          aria-label={field.label}
+                          htmlFor={field.name}
+                          key={field.name}
+                          className="flex items-center gap-x-2"
+                        >
+                          {field.label}
+                          <input 
+                            type="checkbox"
+                            name={field.name}
+                            id={field.name}
+                            defaultChecked={formEdit ? field?.value : ""}
+                          />
+                        </label>
+                      );
+                    } else if (field.type === "date") {
+                      return (
+                        <label
+                          aria-label={field.label}
+                          htmlFor={field.name}
+                          key={field.name}
+                          className="flex flex-col items-center"
+                        >
+                          {field.label}
+                          <input
+                            type="date"
+                            name={field.name}
+                            id={field.name}
+                            defaultValue={formEdit ? field?.value : ""}
+                            className="date-field p-1 font-normal"
+                          />
+                        </label>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </div>
+                <div className="flex gap-x-3">
+                  <button
+                    type="submit"
+                    className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase text-white dark:text-black"
+                  >
+                    {createItems ? t("create") : t("update")}
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase text-white dark:text-black"
+                  >
+                    {t("cancel")}
+                  </button>
+                </div>
+              </form>
             </div>
           )}
+
+          <div className="fields-form mt-20"></div>
         </div>
       </div>
     </section>

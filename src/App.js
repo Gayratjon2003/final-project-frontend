@@ -8,9 +8,10 @@ import {
   Footer,
   Item,
   Collection,
+  AllItems,
+  AllCollections,
   Dashboard,
   DashboardUsers,
-  DashboardItems,
   DashboardCategories,
   DashboardCollections,
   SearchResult
@@ -60,13 +61,14 @@ function App() {
           <Route path={routes.HOME} element={<Home />} />
           <Route path={routes.LOGIN} element={<Login />} />
           <Route path={routes.SIGNUP} element={<SignUp />} />
-          <Route path={routes.ITEM_ID} element={<Item />} />
           <Route path={routes.SEARCH_RESULT} element={<SearchResult />} />
+          <Route path={routes.ITEM_ID} element={<Item />} />
           <Route path={routes.COLLECTION_ID} element={<Collection />} />
+          <Route path={routes.ALL_ITEMS} element={<AllItems />} />
+          <Route path={routes.ALL_COLLECTIONS} element={<AllCollections />} />
           {/* Dashboard */}
           <Route path={routes.DASHBOARD.HOME} element={<Dashboard />} />
           <Route path={routes.DASHBOARD.USERS} element={<DashboardUsers />} />
-          <Route path={routes.DASHBOARD.ITEMS} element={<DashboardItems />} />
           <Route path={routes.DASHBOARD.CATEGORIES} element={<DashboardCategories />} />
           <Route path={routes.DASHBOARD.COLLECTIONS} element={<DashboardCollections />} />
         </Routes>

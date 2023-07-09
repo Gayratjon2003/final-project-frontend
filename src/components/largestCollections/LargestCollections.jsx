@@ -3,9 +3,10 @@ import { Card2 } from "../index";
 import { useTranslation } from "react-i18next";
 import noImage from "../../assets/images/no-image.jpg";
 import axios from "axios";
-import { GET_LATEST_COLLECTIONS } from "../../constant";
+import { GET_LATEST_COLLECTIONS, routes } from "../../constant";
 import { useDispatch } from "react-redux";
 import { start, done } from "../../store/loaderSlice";
+import { Link } from "react-router-dom";
 
 const LargestCollections = () => {
   const { t } = useTranslation();
@@ -57,6 +58,14 @@ const LargestCollections = () => {
               ))}
             </div>
           </div>
+          <div className="bottom mt-6 flex items-center justify-center">
+              <Link to={routes.ALL_COLLECTIONS}>
+              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
+                {/* {t("navbar.signup")}  */}
+                All Collections
+              </button>
+              </Link>
+            </div>
         </div>
       </div>
     </section>

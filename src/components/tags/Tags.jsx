@@ -10,7 +10,7 @@ const Tags = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (tag) => {
-    navigate(`/search/${tag}`)
+    navigate(`/search/tag=${tag}`)
   };
   const getData = async () => {
     dispatch(start());

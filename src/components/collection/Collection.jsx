@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid } from "../../components";
+import { DashboardItems } from "../../components";
 import { useDispatch } from "react-redux";
 import { GET_COLLECTION, GET_ITEMS } from "../../constant";
 import axios from "axios";
@@ -30,12 +30,6 @@ const Collection = () => {
       field: "tags",
       headerName: t("collectionId.tags"),
       width: 200,
-    },
-
-    {
-      field: "createdOn",
-      headerName: t("collectionId.createdOn"),
-      width: 140,
     },
   ];
   const getData = async () => {
@@ -128,12 +122,7 @@ const Collection = () => {
             {renderHTMLCell(data?.description)}
           </div>
           <div className="bottom my-12">
-            <DataGrid
-              rows={itemsData}
-              columns={columns}
-              title={t("collectionItems")}
-              checkboxSelection={false}
-            />
+            <DashboardItems id={id} />
           </div>
         </div>
       </div>
