@@ -36,8 +36,7 @@ const AllCollections = () => {
         data: {},
       });
       if (Array.isArray(data1) && data1?.length !== 0) {
-        const newArray = [...data1, ...data1, ...data1, ...data1];
-        setItems(newArray);
+        setItems(data1);
       }
       dispatch(done());
     } catch (err) {
