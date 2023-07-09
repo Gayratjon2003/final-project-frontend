@@ -6,12 +6,16 @@ import { Card } from "../index";
 import noImage from "../../assets/images/no-image.jpg";
 import { convertTimestamp } from "../../utils/convertTimestamp";
 import { useTranslation } from "react-i18next";
+import { done, start } from "../../store/loaderSlice";
+import { useDispatch } from "react-redux";
 
 const SearchResult = () => {
   const { t } = useTranslation();
   const { id } = useParams();
+  const dispatch = useDispatch()
   const [data, setData] = useState([]);
   const getData = async () => {
+    dispatch(start());
     try {
       const { data: data1 } = await axios({
         method: "get",
@@ -23,8 +27,10 @@ const SearchResult = () => {
         data: {},
       });
       setData(data1);
+      dispatch(done());
     } catch (err) {
       console.log(err);
+      dispatch(done());
     }
   };
   useEffect(() => {
