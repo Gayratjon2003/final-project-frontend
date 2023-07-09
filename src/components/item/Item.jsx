@@ -12,7 +12,6 @@ import { convertTimestamp } from "../../utils/convertTimestamp";
 import { useTranslation } from "react-i18next";
 import { Comment } from "../index";
 import { InputBase } from "@mui/material";
-import { renderHTMLCell } from "../../utils/renderHTMLCell";
 const Item = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -21,6 +20,7 @@ const Item = () => {
   const [data, setData] = useState([]);
   const [isLike, setIsLike] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [extraFields, setExtraFields] = useState([]);
   const getData = async () => {
     dispatch(start());
     try {
@@ -33,6 +33,16 @@ const Item = () => {
         },
         data: {},
       });
+      if (
+        Array.isArray(data1?.customFields.values) &&
+        data1?.customFields.values?.length !== 0
+      ) {
+        const newArray = data1?.customFields.values?.filter(
+          (item) =>
+            item.name !== "name" && item.name !== "tags" && item.name !== "id"
+        );
+        setExtraFields(newArray);
+      }
       setData(data1);
       dispatch(done());
     } catch (err) {
@@ -128,13 +138,23 @@ const Item = () => {
                   </div>
                 </div>
                 <div className="bottom">
-                  <div className="my-3">
-                    {renderHTMLCell(data?.description)}
-                  </div>
                   <p className="my-3">
                     {t("itemId.added")} {convertTimestamp(data?.publishedAt)}{" "}
                     {t("itemId.by")} "{data?.addedBy?.name}"
                   </p>
+                  <div className="extra-fields flex flex-col flex-wrap">
+                    {extraFields?.map((item, id) => (
+                      <div key={id}>
+                        <span className="mr-2 capitalize">
+                          {" "}
+                          {item?.label} :
+                        </span>
+                        <span className="capitalize">
+                          {item?.value.toString()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                   <div className="flex items-center">
                     <button
                       className={

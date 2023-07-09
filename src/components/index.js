@@ -21,3 +21,5 @@ export { default as Comment } from "./comment/Comment";
 export { default as SearchResult } from "./searchResult/SearchResult";
 export { default as Markdown } from "./markdown/Markdown";
 export { default as FreeSolo } from "./autoComplete/FreeSolo";
+export { default as AllItems } from "./AllItems";
+export { default as AllCollections } from "./AllCollections";

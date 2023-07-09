@@ -15,7 +15,7 @@ const SearchResult = () => {
     try {
       const { data: data1 } = await axios({
         method: "get",
-        url: `${GET_ITEMS}?search=${id}`,
+        url: `${GET_ITEMS}?${id}`,
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -35,7 +35,7 @@ const SearchResult = () => {
       <div className="container">
         <div className="search-result-box">
           <h1 className="text-3xl text-center mt-10 mb-4">{t("results")}</h1>
-          <div className="cards flex w-full justify-center flex-wrap gap-4">
+          <div className="cards flex w-full justify-center flex-wrap gap-4 my-3">
             {data?.map((item) => (  
               <Card
                 title={item.name}

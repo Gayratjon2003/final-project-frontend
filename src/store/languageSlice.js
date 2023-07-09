@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import i18n from "../i18n";
 const navData = [
   {
     id: 1,
@@ -22,6 +23,8 @@ export const languageSlice = createSlice({
   reducers: {
     switchLang: (state, { payload }) => {
       state.selectedLang = payload;
+      i18n.changeLanguage(state.selectedLang.encode);
+      localStorage.setItem("lang", state.selectedLang.encode);
     },
   },
 });

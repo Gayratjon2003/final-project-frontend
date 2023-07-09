@@ -84,6 +84,7 @@
     "publishedAt": "Created on",
     "newCollection": "New Collection",
     "editCollection": "Edit Collection",
+    "viewCollection": "View Collection",
     "imageInfo": "Image upload is optional. File must be an image and less than 5 MB",
     "deletedMessage": "The selected collections have been deleted",
     "createdMessage": "The selected collections have been added",
@@ -94,6 +95,7 @@
     "item": "Item",
     "newItem": "New item",
     "editItem": "Edit Item",
+    "viewItem": "View Item",
     "collection": "Collection",
     "tags": "Tags",
     "name": "Name",
@@ -115,6 +117,7 @@
     "tags": "Tags",
     "createdOn": "Created on"
   },
+  "exportToCsv": "Export to CSV",
   "create": "Create",
   "update": "Update",
   "delete": "Delete",

@@ -32,9 +32,6 @@ const Dashboard = () => {
                 {t("dashboard.collections")}
               </Link>
             </li>
-            <li className="text-3xl hover:text-green-500">
-              <Link to={routes.DASHBOARD.ITEMS}>{t("dashboard.items")}</Link>
-            </li>
           </ul>
         </div>
       </div>

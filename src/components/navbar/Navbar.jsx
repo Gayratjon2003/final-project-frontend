@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import i18n from "../../i18n";
 import { useTranslation } from "react-i18next";
@@ -84,16 +84,18 @@ const Navbar = () => {
       document.documentElement.classList.remove("dark");
     }
   };
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+
   const onSelectClick = (id) => {
     dispatch(switchLang(navData[id - 1]));
-    changeLanguage(navData[id - 1].encode);
     setShowSelect(false);
   };
   const searchHandle = () => {
-    navigate(`/search/${searchText}`);
+    navigate(`/search/search=${searchText}`);
+  };
+  const handleKeyDownSearchText = (e) => {
+    if (e.key === "Enter") {
+      searchHandle();
+    }
   };
   const gotoDashboard = () => {
     navigate("/dashboard");
@@ -102,13 +104,23 @@ const Navbar = () => {
     dispatch(clearUser());
     navigate("/");
   };
+  const getEmptySearchText = () => {
+    setSearchText("");
+  };
+  useEffect(() => {
+    if (localStorage?.getItem("lang") === "uz") {
+      dispatch(switchLang(navData[1]));
+    } else {
+      dispatch(switchLang(navData[0]));
+    }
+  }, []);
   return (
     <>
       <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-20 border-b-[1px] border-green-500">
         <div className="container">
           <div className="navbar-box w-full flex justify-between items-center h-[80px]">
             <div className="left flex items-center">
-              <Link to="/">
+              <Link to="/" onClick={getEmptySearchText}>
                 <HomeIcon
                   className="text-black dark:text-white text-4xl mr-6"
                   fontSize="24"
@@ -159,6 +171,7 @@ const Navbar = () => {
                     <InputBase
                       sx={{ ml: 1, flex: 1 }}
                       placeholder={t("navbar.search")}
+                      onKeyDown={handleKeyDownSearchText}
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
                       className="nav-search dark:!text-white w-[200px]"

@@ -22,6 +22,8 @@ export const routes = {
   ITEM_ID: "/item/:id",
   SEARCH_RESULT: "/search/:id",
   COLLECTION_ID: "/collection/:id",
+  ALL_ITEMS: "/items/all",
+  ALL_COLLECTIONS: "/collections/all",
   DASHBOARD: {
     HOME: "/dashboard",
     USERS: "/dashboard/users",

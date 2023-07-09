@@ -84,6 +84,7 @@
     "publishedAt": "Yaratildi",
     "newCollection": "Kolleksiya yaratish",
     "editCollection": "Kolleksiya tahrirash",
+    "viewCollection": "Kolleksiya ko'rish",
     "imageInfo": "Rasm yuklash ixtiyoriy. Fayl rasm va 5 MB dan kam bo'lishi kerak",
     "deletedMessage": "Tanlangan kolleksiyalar o'chirildi",
     "createdMessage": "Tanlangan kolleksiyalar qo'shildi",
@@ -94,6 +95,7 @@
     "item": "Mahsulot",
     "newItem": "Yangi yaratish",
     "editItem": "Tahrirlash",
+    "viewItem": "Ko'rish",
     "collection": "Kolleksiya",
     "tags": "Teglar",
     "name": "Nomi",
@@ -115,6 +117,7 @@
     "tags": "Teglar",
     "createdOn": "Yaratilgan sanasi"
   },
+  "exportToCsv": "CSVga eksport qilish",
   "create": "Yaratish",
   "update": "Yangilash",
   "delete":"O'chirish",
