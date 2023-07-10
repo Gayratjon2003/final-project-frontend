@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 
 const Card2 = ({ collectionLink, img, title, volume }) => {
   const { t } = useTranslation();
-
   return (
     <div className="card flex items-center flex-col">
       <div className="top p-3">
@@ -21,7 +20,7 @@ const Card2 = ({ collectionLink, img, title, volume }) => {
         <h3 className="text-xl">{millify(volume, { precision: 2 })}</h3>
         <Link to={collectionLink}>
           <button className="px-4 py-2 bg-green-500 rounded-md dark:bg-white mt-2 text-white dark:text-black">
-          {t("largestCollections.view")}
+            {t("largestCollections.view")}
           </button>
         </Link>
       </div>

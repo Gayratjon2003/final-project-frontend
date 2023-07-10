@@ -12,7 +12,6 @@ const LargestCollections = () => {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
-
   const getData = async () => {
     dispatch(start());
     try {
@@ -35,7 +34,6 @@ const LargestCollections = () => {
   useEffect(() => {
     getData();
   }, []);
-
   return (
     <section className="largestCollections w-full bg-white dark:bg-black">
       <div className="container">
@@ -59,13 +57,12 @@ const LargestCollections = () => {
             </div>
           </div>
           <div className="bottom mt-6 flex items-center justify-center">
-              <Link to={routes.ALL_COLLECTIONS}>
+            <Link to={routes.ALL_COLLECTIONS}>
               <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
-                {/* {t("navbar.signup")}  */}
-                All Collections
+                {t("allCollections")}
               </button>
-              </Link>
-            </div>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

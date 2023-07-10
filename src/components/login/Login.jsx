@@ -23,7 +23,6 @@ import { changeToken, getUserInfo } from "../../store/userSlice";
 import { useTranslation } from "react-i18next";
 
 const defaultTheme = createTheme();
-
 function Login() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -67,79 +66,77 @@ function Login() {
     }
   };
   return (
-    <>
-      <div className="login-center py-20">
-        <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
+    <div className="login-center py-20">
+      <ThemeProvider theme={defaultTheme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {t("login.title")}
+            </Typography>
             <Box
-              sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+              className="bg-white dark:bg-black dark:text-white"
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                {t("login.title")}
-              </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{ mt: 1 }}
-                className="bg-white dark:bg-black dark:text-white"
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                name="email"
+                autoComplete="email"
+                placeholder={t("login.email")}
+                autoFocus
+                className="bg-white dark:bg-black login-input"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                placeholder={t("login.password")}
+                className="bg-white dark:bg-black login-input"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
               >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  placeholder={t("login.email")}
-                  autoFocus
-                  className="bg-white dark:bg-black login-input"
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  placeholder={t("login.password")}
-                  className="bg-white dark:bg-black login-input"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {t("login.title")}
-                </Button>
-                <Grid container>
-                  <Grid item>
-                    <Link
-                      variant="body2"
-                      onClick={() => navigate("/signup")}
-                      className="cursor-pointer"
-                    >
-                      {t("login.noAccount")}
-                    </Link>
-                  </Grid>
+                {t("login.title")}
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link
+                    variant="body2"
+                    onClick={() => navigate("/signup")}
+                    className="cursor-pointer"
+                  >
+                    {t("login.noAccount")}
+                  </Link>
                 </Grid>
-              </Box>
+              </Grid>
             </Box>
-          </Container>
-        </ThemeProvider>
-      </div>
-    </>
+          </Box>
+        </Container>
+      </ThemeProvider>
+    </div>
   );
 }
 

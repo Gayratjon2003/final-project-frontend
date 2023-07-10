@@ -1,23 +1,15 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GET_CATEGORIES,
-  GET_COLLECTION,
-  GET_ITEMS,
-  GET_ITEMS_ADMIN,
-  GET_TAGS,
-} from "../../constant";
-import { DataGrid, Markdown, FreeSolo } from "../index";
+import { GET_COLLECTION, GET_ITEMS, GET_TAGS } from "../../constant";
+import { DataGrid, FreeSolo } from "../index";
 import { start, done } from "../../store/loaderSlice";
-import { convertTimestamp } from "../../utils/convertTimestamp";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UploadIcon from "@mui/icons-material/Upload";
-import { Autocomplete, Checkbox, Input, InputBase, TextField } from "@mui/material";
-import i18next from "i18next";
-import { renderHTMLCell } from "../../utils/renderHTMLCell";
+import { Input, InputBase } from "@mui/material";
+import { CSVLink } from "react-csv";
 const DashboardItems = ({ id }) => {
   const { user, token } = useSelector((state) => state.user);
   const { t } = useTranslation();
@@ -43,7 +35,12 @@ const DashboardItems = ({ id }) => {
   const [customFields, setCustomFields] = useState([]);
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
-
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
   const checkEmptyValues = () => {
     return name.trim().length > 1 && author.trim().length > 1;
   };
@@ -144,7 +141,6 @@ const DashboardItems = ({ id }) => {
       );
     }
   };
-
   const handleUpdateItem = async (fields) => {
     if (checkEmptyValues()) {
       dispatch(start());
@@ -299,7 +295,7 @@ const DashboardItems = ({ id }) => {
         },
         data: {},
       });
-      setCollectionsData(data1)
+      setCollectionsData(data1);
       dispatch(done());
     } catch (err) {
       console.log(err);
@@ -307,7 +303,6 @@ const DashboardItems = ({ id }) => {
       navigate("/");
     }
   };
-
   const getTags = async () => {
     dispatch(start());
     try {
@@ -327,7 +322,6 @@ const DashboardItems = ({ id }) => {
       dispatch(done());
     }
   };
-
   const handleAddItem = () => {
     setFormStatus(true);
     setCreateItems(true);
@@ -355,7 +349,7 @@ const DashboardItems = ({ id }) => {
       setFormStatus(true);
       setCreateItems(false);
       setFormEdit(true);
-      navigate(`/item/${selectedIds[0]}`)
+      navigate(`/item/${selectedIds[0]}`);
     } else {
       dispatch(
         snackbarStart({
@@ -365,15 +359,6 @@ const DashboardItems = ({ id }) => {
       );
     }
   };
-  useEffect(() => {
-    getData();
-    getTags();
-    getCollection();
-  }, []);
-  useEffect(()=> {
-    setFields(collectionsData?.fields);
-      setIsOwner(collectionsData?.addedBy?._id === user._id || user?.isAdmin);
-  },[token, collectionsData])
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
   };
@@ -417,6 +402,15 @@ const DashboardItems = ({ id }) => {
     }
   };
   useEffect(() => {
+    getData();
+    getTags();
+    getCollection();
+  }, []);
+  useEffect(() => {
+    setFields(collectionsData?.fields);
+    setIsOwner(collectionsData?.addedBy?._id === user._id || user?.isAdmin);
+  }, [token, collectionsData]);
+  useEffect(() => {
     if (itemsFields?.length > 0 && selectedIds[0]) {
       const newArray = itemsFields?.filter(
         (item) => item._id === selectedIds[0]
@@ -426,11 +420,11 @@ const DashboardItems = ({ id }) => {
       setCustomFields(fields);
     }
   }, [formEdit, itemsFields, fields]);
+
   return (
     <section className="pt-20 dashboard-users">
       <div className="container">
         <div className="dashboard-users-box">
-          
           <div className="center mb-12">
             {isOwner && (
               <div className="top flex gap-x-3 text-white dark:text-black my-3">
@@ -458,6 +452,11 @@ const DashboardItems = ({ id }) => {
                 >
                   {t("itemsDashboard.viewItem")}
                 </button>
+                <CSVLink data={rows} headers={headers} filename={"Items.csv"}>
+                  <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
+                    {t("exportToCsv")}
+                  </button>
+                </CSVLink>
               </div>
             )}
             <DataGrid
@@ -599,7 +598,7 @@ const DashboardItems = ({ id }) => {
                           className="flex items-center gap-x-2"
                         >
                           {field.label}
-                          <input 
+                          <input
                             type="checkbox"
                             name={field.name}
                             id={field.name}

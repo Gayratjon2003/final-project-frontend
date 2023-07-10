@@ -103,6 +103,5 @@ input {
     @apply bg-white dark:bg-black cursor-pointer dark:!border-[2px] dark:!border-white border-solid !border-black;
 }
 .date-field::-webkit-calendar-picker-indicator {
-    /* filter: invert(100%); */
     @apply !bg-white;
     }

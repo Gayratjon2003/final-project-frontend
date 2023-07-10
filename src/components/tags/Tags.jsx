@@ -9,8 +9,9 @@ const Tags = () => {
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleClick = (tag) => {
-    navigate(`/search/tag=${tag}`)
+    navigate(`/search/tag=${tag}`);
   };
   const getData = async () => {
     dispatch(start());
@@ -31,9 +32,9 @@ const Tags = () => {
       dispatch(done());
     }
   };
-  useEffect(()=>{
-    getData()
-  },[])
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <section className="tags w-full bg-white dark:bg-black pt-20">
       <div className="container">

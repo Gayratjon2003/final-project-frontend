@@ -8,16 +8,61 @@ import { convertTimestamp } from "../../utils/convertTimestamp";
 import { snackbarStart } from "../../store/SnackbarSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { CSVLink } from "react-csv";
 
 const DashboardUsers = () => {
   const { user, token } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [users, setUsers] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
+  const columns = [
+    { field: "id", headerName: "ID", width: 250 },
+    {
+      field: "name",
+      headerName: t("usersDashboard.name"),
+      width: 200,
+    },
 
+    {
+      field: "isAdmin",
+      headerName: t("usersDashboard.role"),
+      width: 120,
+    },
+
+    {
+      field: "registeredTime",
+      headerName: t("usersDashboard.registeredTime"),
+      width: 140,
+    },
+    {
+      field: "lastLoginTime",
+      headerName: t("usersDashboard.lastLoginTime"),
+      width: 140,
+    },
+    {
+      field: "status",
+      headerName: t("usersDashboard.status"),
+      width: 140,
+    },
+  ];
+  const rows = users?.map((user) => {
+    return {
+      id: user?._id,
+      name: user?.name,
+      isAdmin: user?.isAdmin ? t("admin") : t("notAdmin"),
+      registeredTime: convertTimestamp(user?.registerTime),
+      lastLoginTime: convertTimestamp(user?.lastLoginTime),
+      status: user?.status ? t("active") : t("blocked"),
+    };
+  });
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
   const deleteUsers = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -220,47 +265,6 @@ const DashboardUsers = () => {
     dispatch(done());
     setSelectedIds([]);
   };
-
-  const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("usersDashboard.name"),
-      width: 200,
-    },
-
-    {
-      field: "isAdmin",
-      headerName: t("usersDashboard.role"),
-      width: 120,
-    },
-
-    {
-      field: "registeredTime",
-      headerName: t("usersDashboard.registeredTime"),
-      width: 140,
-    },
-    {
-      field: "lastLoginTime",
-      headerName: t("usersDashboard.lastLoginTime"),
-      width: 140,
-    },
-    {
-      field: "status",
-      headerName: t("usersDashboard.status"),
-      width: 140,
-    },
-  ];
-  const rows = users?.map((user) => {
-    return {
-      id: user?._id,
-      name: user?.name,
-      isAdmin: user?.isAdmin ? t("admin") : t("notAdmin"),
-      registeredTime: convertTimestamp(user?.registerTime),
-      lastLoginTime: convertTimestamp(user?.lastLoginTime),
-      status: user?.status ? t("active") : t("blocked"),
-    };
-  });
   const getData = async () => {
     dispatch(start());
     try {
@@ -282,12 +286,12 @@ const DashboardUsers = () => {
       navigate("/");
     }
   };
-  useEffect(() => {
-    getData();
-  }, []);
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
   };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <section className="pt-20 dashboard-users">
       <div className="container">
@@ -327,6 +331,11 @@ const DashboardUsers = () => {
               >
                 {t("usersDashboard.removeAdmin")}
               </button>
+              <CSVLink data={rows} headers={headers} filename={"Users.csv"}>
+                <button className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase">
+                  {t("exportToCsv")}
+                </button>
+              </CSVLink>
             </div>
             <DataGrid
               rows={rows}

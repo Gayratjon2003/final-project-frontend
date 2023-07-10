@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const { user, token } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   return (
     <section className="pt-20 dashboard">
       <div className="container">

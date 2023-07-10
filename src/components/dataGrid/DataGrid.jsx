@@ -11,8 +11,7 @@ export default function DataGridDemo({
   onRowsSelectionHandler,
   selectedIds,
 }) {
-  const handleProcessRowUpdate = (newRow, oldRow) => {
-  };
+  const handleProcessRowUpdate = (newRow, oldRow) => {};
   const onProcessRowUpdateError = () => {};
   return (
     <Box sx={{ height: 400, width: "100%" }} className="bg-white">

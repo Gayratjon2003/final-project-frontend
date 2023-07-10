@@ -14,7 +14,7 @@ import {
   DashboardUsers,
   DashboardCategories,
   DashboardCollections,
-  SearchResult
+  SearchResult,
 } from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar, Alert, Box, CircularProgress } from "@mui/material";
@@ -24,7 +24,6 @@ import { routes } from "./constant";
 function App() {
   const dispatch = useDispatch();
   const { status, text, severity } = useSelector((state) => state.snackBar);
-  const { user, token } = useSelector((state) => state.user);
   const { isLoading } = useSelector((state) => state.loader);
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
@@ -52,7 +51,7 @@ function App() {
       );
       dispatch(getUserInfo(JSON.parse(localStorage.getItem("token"))));
     }
-  }, []); 
+  }, []);
   return (
     <>
       <div className="App dark:bg-black w-full h-screen">
@@ -69,8 +68,14 @@ function App() {
           {/* Dashboard */}
           <Route path={routes.DASHBOARD.HOME} element={<Dashboard />} />
           <Route path={routes.DASHBOARD.USERS} element={<DashboardUsers />} />
-          <Route path={routes.DASHBOARD.CATEGORIES} element={<DashboardCategories />} />
-          <Route path={routes.DASHBOARD.COLLECTIONS} element={<DashboardCollections />} />
+          <Route
+            path={routes.DASHBOARD.CATEGORIES}
+            element={<DashboardCategories />}
+          />
+          <Route
+            path={routes.DASHBOARD.COLLECTIONS}
+            element={<DashboardCollections />}
+          />
         </Routes>
         <Footer />
       </div>

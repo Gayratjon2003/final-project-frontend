@@ -12,7 +12,6 @@ const Card = ({
   createdAt,
 }) => {
   const { t } = useTranslation();
-
   return (
     <div className="card flex min-w-[350px] w-[32%] shadow-cardLight dark:shadow-cardDark">
       <div className="left overflow-hidden">

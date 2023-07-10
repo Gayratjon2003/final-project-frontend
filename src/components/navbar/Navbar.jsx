@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
-import i18n from "../../i18n";
 import { useTranslation } from "react-i18next";
 import {
   styled,
@@ -84,7 +83,6 @@ const Navbar = () => {
       document.documentElement.classList.remove("dark");
     }
   };
-
   const onSelectClick = (id) => {
     dispatch(switchLang(navData[id - 1]));
     setShowSelect(false);
@@ -115,7 +113,6 @@ const Navbar = () => {
     }
   }, []);
   return (
-    <>
       <div className="navbar bg-white dark:bg-black w-full h-[80px] flex justify-center items-center fixed z-20 border-b-[1px] border-green-500">
         <div className="container">
           <div className="navbar-box w-full flex justify-between items-center h-[80px]">
@@ -220,7 +217,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

@@ -1,5 +1,5 @@
-// export const SERVER_URL = "http://localhost:5000/";
-export const SERVER_URL = "https://final-project-4lp9.onrender.com/";
+export const SERVER_URL = "http://localhost:5000/";
+// export const SERVER_URL = "https://final-project-4lp9.onrender.com/";
 export const LOGIN_URL = `${SERVER_URL}api/auth`;
 export const REGISTER_URL = `${SERVER_URL}api/users`;
 export const GET_USER_INFO_URL = `${SERVER_URL}api/users/me`;

@@ -16,22 +16,7 @@ const Collection = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [data, setData] = useState([]);
-  const [itemsData, setItemsData] = useState([]);
 
-  const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("collectionId.name"),
-      width: 250,
-    },
-
-    {
-      field: "tags",
-      headerName: t("collectionId.tags"),
-      width: 200,
-    },
-  ];
   const getData = async () => {
     dispatch(start());
     try {
@@ -51,41 +36,8 @@ const Collection = () => {
       dispatch(done());
     }
   };
-  const getDataWithQuery = async () => {
-    dispatch(start());
-    try {
-      const { data: data1 } = await axios({
-        method: "get",
-        url: `${GET_ITEMS}?categoryId=${id}`,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {},
-      });
-      setItemsData(
-        data1?.map((item) => {
-          return {
-            id: item._id,
-            name: item.name,
-            tags: item.tags
-              .map((item) => `#${item}`)
-              .toString()
-              .replaceAll(",", " "),
-            createdOn: convertTimestamp(item.publishedAt),
-          };
-        })
-      );
-      dispatch(done());
-    } catch (err) {
-      console.log(err);
-      dispatch(done());
-    }
-  };
-
   useEffect(() => {
     getData();
-    getDataWithQuery();
   }, [id]);
   return (
     <div className="collection bg-white dark:bg-black pt-20">
