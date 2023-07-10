@@ -57,74 +57,6 @@ const DashboardCollections = () => {
   const [date2, setDate2] = useState("");
   const [date3, setDate3] = useState("");
 
-  const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("collectionsDashboard.name"),
-      width: 200,
-    },
-    {
-      field: "category",
-      headerName: t("collectionsDashboard.category"),
-      width: 200,
-    },
-    {
-      field: "description",
-      headerName: t("collectionsDashboard.desc"),
-      width: 200,
-      renderCell: (params) => renderHTMLCell(params.value),
-    },
-    {
-      field: "volume",
-      headerName: t("collectionsDashboard.volume"),
-      width: 80,
-    },
-    {
-      field: "owner",
-      headerName: t("collectionsDashboard.owner"),
-      width: 150,
-    },
-    {
-      field: "publishedAt",
-      headerName: t("collectionsDashboard.publishedAt"),
-      width: 200,
-    },
-  ];
-  const rows = collectionsData?.map((collection) => {
-    return {
-      id: collection?._id,
-      category: collection?.category?.name[i18next.language],
-      name: collection?.name,
-      description: collection?.description,
-      volume: collection?.volume,
-      owner: collection?.addedBy?.name,
-      publishedAt: convertTimestamp(collection?.publishedAt),
-    };
-  });
-  const headers = columns?.map((item) => {
-    return {
-      label: item?.headerName,
-      key: item?.field,
-    };
-  });
-  const csvData = rows?.map((collection) => {
-    return {
-      id: collection?.id,
-      category: collection?.category,
-      name: collection?.name,
-      description: convertToPlainText(collection?.description),
-      volume: collection?.volume,
-      owner: collection?.addedBy?.name,
-      publishedAt: convertTimestamp(collection?.publishedAt),
-    };
-  });
-  const categoryOptions = categoryData?.map((category) => {
-    return {
-      id: category?._id,
-      label: category?.name[i18next.language],
-    };
-  });
   const deleteCollection = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -477,6 +409,75 @@ const DashboardCollections = () => {
     element.innerHTML = html;
     return element.innerText;
   };
+  
+  const columns = [
+    { field: "id", headerName: "ID", width: 250 },
+    {
+      field: "name",
+      headerName: t("collectionsDashboard.name"),
+      width: 200,
+    },
+    {
+      field: "category",
+      headerName: t("collectionsDashboard.category"),
+      width: 200,
+    },
+    {
+      field: "description",
+      headerName: t("collectionsDashboard.desc"),
+      width: 200,
+      renderCell: (params) => renderHTMLCell(params.value),
+    },
+    {
+      field: "volume",
+      headerName: t("collectionsDashboard.volume"),
+      width: 80,
+    },
+    {
+      field: "owner",
+      headerName: t("collectionsDashboard.owner"),
+      width: 150,
+    },
+    {
+      field: "publishedAt",
+      headerName: t("collectionsDashboard.publishedAt"),
+      width: 200,
+    },
+  ];
+  const rows = collectionsData?.map((collection) => {
+    return {
+      id: collection?._id,
+      category: collection?.category?.name[i18next.language],
+      name: collection?.name,
+      description: collection?.description,
+      volume: collection?.volume,
+      owner: collection?.addedBy?.name,
+      publishedAt: convertTimestamp(collection?.publishedAt),
+    };
+  });
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
+  const csvData = rows?.map((collection) => {
+    return {
+      id: collection?.id,
+      category: collection?.category,
+      name: collection?.name,
+      description: convertToPlainText(collection?.description),
+      volume: collection?.volume,
+      owner: collection?.addedBy?.name,
+      publishedAt: convertTimestamp(collection?.publishedAt),
+    };
+  });
+  const categoryOptions = categoryData?.map((category) => {
+    return {
+      id: category?._id,
+      label: category?.name[i18next.language],
+    };
+  });
   useEffect(() => {
     getData();
     getCategories();

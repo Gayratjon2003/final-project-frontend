@@ -17,52 +17,7 @@ const DashboardUsers = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("usersDashboard.name"),
-      width: 200,
-    },
-
-    {
-      field: "isAdmin",
-      headerName: t("usersDashboard.role"),
-      width: 120,
-    },
-
-    {
-      field: "registeredTime",
-      headerName: t("usersDashboard.registeredTime"),
-      width: 140,
-    },
-    {
-      field: "lastLoginTime",
-      headerName: t("usersDashboard.lastLoginTime"),
-      width: 140,
-    },
-    {
-      field: "status",
-      headerName: t("usersDashboard.status"),
-      width: 140,
-    },
-  ];
-  const rows = users?.map((user) => {
-    return {
-      id: user?._id,
-      name: user?.name,
-      isAdmin: user?.isAdmin ? t("admin") : t("notAdmin"),
-      registeredTime: convertTimestamp(user?.registerTime),
-      lastLoginTime: convertTimestamp(user?.lastLoginTime),
-      status: user?.status ? t("active") : t("blocked"),
-    };
-  });
-  const headers = columns?.map((item) => {
-    return {
-      label: item?.headerName,
-      key: item?.field,
-    };
-  });
+  
   const deleteUsers = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -289,6 +244,53 @@ const DashboardUsers = () => {
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
   };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 250 },
+    {
+      field: "name",
+      headerName: t("usersDashboard.name"),
+      width: 200,
+    },
+
+    {
+      field: "isAdmin",
+      headerName: t("usersDashboard.role"),
+      width: 120,
+    },
+
+    {
+      field: "registeredTime",
+      headerName: t("usersDashboard.registeredTime"),
+      width: 140,
+    },
+    {
+      field: "lastLoginTime",
+      headerName: t("usersDashboard.lastLoginTime"),
+      width: 140,
+    },
+    {
+      field: "status",
+      headerName: t("usersDashboard.status"),
+      width: 140,
+    },
+  ];
+  const rows = users?.map((user) => {
+    return {
+      id: user?._id,
+      name: user?.name,
+      isAdmin: user?.isAdmin ? t("admin") : t("notAdmin"),
+      registeredTime: convertTimestamp(user?.registerTime),
+      lastLoginTime: convertTimestamp(user?.lastLoginTime),
+      status: user?.status ? t("active") : t("blocked"),
+    };
+  });
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
   useEffect(() => {
     getData();
   }, []);
