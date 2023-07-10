@@ -3,18 +3,17 @@ import { useDispatch } from "react-redux";
 import { done, start } from "../store/loaderSlice";
 import axios from "axios";
 import { GET_COLLECTION } from "../constant";
-import { Card, Card2 } from "./index";
-import { convertTimestamp } from "../utils/convertTimestamp";
+import { Card2 } from "./index";
 import noImage from "../assets/images/no-image.jpg";
 import { Pagination, PaginationItem } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const AllCollections = () => {
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const [items, setItems] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 6; 
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
@@ -22,7 +21,6 @@ const AllCollections = () => {
   const handlePageChange = (event, selectedPage) => {
     setCurrentPage(selectedPage);
   };
-
   const getData = async () => {
     dispatch(start());
     try {
@@ -52,18 +50,18 @@ const AllCollections = () => {
       <div className="container">
         <div className="All-items-box">
           <div className="top">
-            <h1 className="text-center my-6 text-3xl">All Collections</h1>
+            <h1 className="text-center my-6 text-3xl">{t("allCollections")}</h1>
           </div>
           <div className="center">
             <div className="cards flex w-full justify-between flex-wrap gap-3">
               {currentItems?.map((item, id) => (
                 <Card2
-                key={id}
-                title={item?.name}
-                img={item?.image?.url || noImage}
-                collectionLink={`/collection/${item._id}`}
-                volume={item.volume}
-              />
+                  key={id}
+                  title={item?.name}
+                  img={item?.image?.url || noImage}
+                  collectionLink={`/collection/${item._id}`}
+                  volume={item.volume}
+                />
               ))}
             </div>
           </div>
@@ -77,7 +75,9 @@ const AllCollections = () => {
               renderItem={(item) => (
                 <PaginationItem
                   {...item}
-                  className={`text-black dark:text-white ${item.selected ? "dark:!bg-white !text-black": ""}`}
+                  className={`text-black dark:text-white ${
+                    item.selected ? "dark:!bg-white !text-black" : ""
+                  }`}
                 />
               )}
             />

@@ -118,6 +118,8 @@
     "createdOn": "Yaratilgan sanasi"
   },
   "exportToCsv": "CSVga eksport qilish",
+  "allCollections": "Barcha to'plamlar",
+  "allItems": "Barcha elementlar",
   "create": "Yaratish",
   "update": "Yangilash",
   "delete":"O'chirish",

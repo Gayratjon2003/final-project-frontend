@@ -41,7 +41,6 @@ const DashboardCollections = () => {
   const [multiCheckbox, setMultiCheckbox] = useState(false);
   const [dateCheckbox, setDateCheckbox] = useState(false);
   const [formEdit, setFormEdit] = useState(false);
-  const [fields, setFields] = useState([]);
   const [str1, setStr1] = useState("");
   const [str2, setStr2] = useState("");
   const [str3, setStr3] = useState("");
@@ -98,6 +97,23 @@ const DashboardCollections = () => {
       category: collection?.category?.name[i18next.language],
       name: collection?.name,
       description: collection?.description,
+      volume: collection?.volume,
+      owner: collection?.addedBy?.name,
+      publishedAt: convertTimestamp(collection?.publishedAt),
+    };
+  });
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
+  const csvData = rows?.map((collection) => {
+    return {
+      id: collection?.id,
+      category: collection?.category,
+      name: collection?.name,
+      description: convertToPlainText(collection?.description),
       volume: collection?.volume,
       owner: collection?.addedBy?.name,
       publishedAt: convertTimestamp(collection?.publishedAt),
@@ -456,6 +472,11 @@ const DashboardCollections = () => {
     setSelectedIds([]);
   };
   const getLengthToBool = (val) => val?.toString()?.trim()?.length > 0;
+  const convertToPlainText = (html) => {
+    const element = document.createElement("div");
+    element.innerHTML = html;
+    return element.innerText;
+  };
   useEffect(() => {
     getData();
     getCategories();
@@ -519,28 +540,7 @@ const DashboardCollections = () => {
       });
     }
   }, [formEdit, collectionsData]);
-  const headers = columns?.map((item) => {
-    return {
-      label: item?.headerName,
-      key: item?.field,
-    };
-  });
-  const convertToPlainText = (html) => {
-    const element = document.createElement("div");
-    element.innerHTML = html;
-    return element.innerText;
-  };
-  const csvData = rows?.map((collection) => {
-    return {
-      id: collection?.id,
-      category: collection?.category,
-      name: collection?.name,
-      description: convertToPlainText(collection?.description),
-      volume: collection?.volume,
-      owner: collection?.addedBy?.name,
-      publishedAt: convertTimestamp(collection?.publishedAt),
-    };
-  });
+
   return (
     <section className="pt-20 dashboard-users">
       <div className="container">

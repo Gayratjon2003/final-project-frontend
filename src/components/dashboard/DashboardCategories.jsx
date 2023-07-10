@@ -14,14 +14,12 @@ const DashboardCategories = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [categoriesData, setCategoriesData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [categoryEn, setCategoryEn] = useState("");
   const [categoryUz, setCategoryUz] = useState("");
   const [formStatus, setFormStatus] = useState(false);
   const [createCategory, setCreateCategory] = useState(true);
-
   const columns = [
     { field: "id", headerName: "ID", width: 250 },
     {
@@ -34,7 +32,6 @@ const DashboardCategories = () => {
     id: category._id,
     name: category?.name[i18n.language],
   }));
-
   const deleteUsers = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -220,12 +217,12 @@ const DashboardCategories = () => {
     setCategoryUz("");
     setSelectedIds([]);
   };
-  useEffect(() => {
-    getData();
-  }, []);
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
   };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <section className="pt-20 dashboard-users">
       <div className="container">

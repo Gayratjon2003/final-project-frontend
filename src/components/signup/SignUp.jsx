@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import { changeToken, getUserInfo } from "../../store/userSlice";
 
 const defaultTheme = createTheme();
-
 export default function SignUp() {
   const { t } = useTranslation();
   const dispatch = useDispatch();

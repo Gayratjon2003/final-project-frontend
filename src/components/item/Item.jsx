@@ -93,12 +93,6 @@ const Item = () => {
       dispatch(done());
     }
   };
-  useEffect(() => {
-    getData();
-  }, []);
-  useEffect(() => {
-    setIsLike(data?.likes?.includes(user?._id));
-  }, [data]);
   const handleLike = () => {
     getLike();
   };
@@ -107,6 +101,12 @@ const Item = () => {
       sendComment();
     }
   };
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    setIsLike(data?.likes?.includes(user?._id));
+  }, [data]);
   return (
     <div className="item pt-20 dark:bg-black">
       <div className="container">

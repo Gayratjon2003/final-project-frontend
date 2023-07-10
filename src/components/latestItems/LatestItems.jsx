@@ -13,7 +13,6 @@ const LatestItems = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-
   const getData = async () => {
     dispatch(start());
     try {
@@ -60,16 +59,14 @@ const LatestItems = () => {
                 />
               ))}
             </div>
-            
           </div>
           <div className="bottom mt-6 flex items-center justify-center">
-              <Link to={routes.ALL_ITEMS}>
+            <Link to={routes.ALL_ITEMS}>
               <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
-                {/* {t("navbar.signup")}  */}
-                All Items
+                {t("allItems")}
               </button>
-              </Link>
-            </div>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

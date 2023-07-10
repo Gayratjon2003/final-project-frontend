@@ -118,6 +118,8 @@
     "createdOn": "Created on"
   },
   "exportToCsv": "Export to CSV",
+  "allCollections": "All Collections",
+  "allItems": "All Items",
   "create": "Create",
   "update": "Update",
   "delete": "Delete",
