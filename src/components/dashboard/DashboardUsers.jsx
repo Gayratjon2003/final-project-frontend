@@ -17,7 +17,7 @@ const DashboardUsers = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  
+
   const deleteUsers = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -252,7 +252,11 @@ const DashboardUsers = () => {
       headerName: t("usersDashboard.name"),
       width: 200,
     },
-
+    {
+      field: "email",
+      headerName: t("usersDashboard.email"),
+      width: 200,
+    },
     {
       field: "isAdmin",
       headerName: t("usersDashboard.role"),
@@ -279,6 +283,7 @@ const DashboardUsers = () => {
     return {
       id: user?._id,
       name: user?.name,
+      email: user?.email,
       isAdmin: user?.isAdmin ? t("admin") : t("notAdmin"),
       registeredTime: convertTimestamp(user?.registerTime),
       lastLoginTime: convertTimestamp(user?.lastLoginTime),
@@ -299,7 +304,9 @@ const DashboardUsers = () => {
       <div className="container">
         <div className="dashboard-users-box">
           <div className="top mt-10 mb-3">
-            <h1 className="text-3xl text-center max-sm:text-2xl">{t("dashboard.users")}</h1>
+            <h1 className="text-3xl text-center max-sm:text-2xl">
+              {t("dashboard.users")}
+            </h1>
           </div>
           <div className="center mb-12 max-sm:text-sm">
             <div className="top flex gap-x-3 text-white dark:text-black my-3 gap-3 flex-wrap max-sm:flex-col max-sm:items-center">

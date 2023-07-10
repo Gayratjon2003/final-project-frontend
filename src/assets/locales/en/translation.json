@@ -50,6 +50,7 @@
     "makeAnAdmin": "Make an admin",
     "removeAdmin": "Remove Admin",
     "name": "Name",
+    "email": "Email",
     "role": "Role",
     "registeredTime": "Registered Time",
     "lastLoginTime": "Last Login Time",

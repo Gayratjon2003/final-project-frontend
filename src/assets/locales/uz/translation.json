@@ -50,6 +50,7 @@
     "makeAnAdmin": "Admin qilish",
     "removeAdmin": "Adminlikni o'chirish",
     "name": "Ism",
+    "email": "Email",
     "role": "Rol",
     "registeredTime": "Ro'yxatdan o'tgan vaqt",
     "lastlLoginTime": "Oxirgi faollik",
