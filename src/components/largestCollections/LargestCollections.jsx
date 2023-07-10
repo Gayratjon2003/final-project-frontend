@@ -39,12 +39,12 @@ const LargestCollections = () => {
       <div className="container">
         <div className="largestCollections-box">
           <div className="top">
-            <h1 className="text-center text-3xl mb-5">
+            <h1 className="text-center text-3xl mb-5 max-sm:text-2xl">
               {t("largestCollections.title")}
             </h1>
           </div>
           <div className="center py-4">
-            <div className="cards flex w-full justify-between">
+            <div className="cards flex w-full justify-between flex-wrap gap-3">
               {data?.map((item, id) => (
                 <Card2
                   key={id}
@@ -58,7 +58,7 @@ const LargestCollections = () => {
           </div>
           <div className="bottom mt-6 flex items-center justify-center">
             <Link to={routes.ALL_COLLECTIONS}>
-              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
+              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase max-sm:text-sm">
                 {t("allCollections")}
               </button>
             </Link>

@@ -36,13 +36,13 @@ const Tags = () => {
     getData();
   }, []);
   return (
-    <section className="tags w-full bg-white dark:bg-black pt-20">
+    <section className="tags w-full bg-white dark:bg-black pt-20 max-sm:pt-10">
       <div className="container">
         <div className="tags-box border-t-[1px] border-gray-500">
-          <div className="flex items-center justify-center gap-x-3 flex-wrap gap-y-3 mt-20 pb-20">
+          <div className="flex items-center justify-center gap-x-3 flex-wrap gap-y-3 mt-20 pb-20 max-sm:mt-10 max-sm:pb-10">
             {tags?.map((item, id) => (
               <p
-                className="px-4 py-[5px] bg-blue-500 rounded-full cursor-pointer dark:bg-white dark:text-black"
+                className="px-4 py-[5px] bg-blue-500 rounded-full cursor-pointer dark:bg-white dark:text-black max-sm:text-sm"
                 key={id}
                 onClick={() => handleClick(item)}
               >

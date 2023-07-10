@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DashboardItems } from "../../components";
 import { useDispatch } from "react-redux";
-import { GET_COLLECTION, GET_ITEMS } from "../../constant";
+import { GET_COLLECTION } from "../../constant";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { start, done } from "../../store/loaderSlice";
@@ -59,7 +59,7 @@ const Collection = () => {
                   {t("author")}: {data?.addedBy?.name}
                 </p>
               </div>
-              <div className="absolute top-2 right-2 z-10">
+              <div className="absolute top-2 right-2 z-10 max-sm:top-11">
                 <p className="px-2 py-1 bg-white dark:bg-black rounded-md">
                   {t("createdOn")}: {convertTimestamp(data?.publishedAt)}
                 </p>

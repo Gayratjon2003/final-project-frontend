@@ -299,10 +299,10 @@ const DashboardUsers = () => {
       <div className="container">
         <div className="dashboard-users-box">
           <div className="top mt-10 mb-3">
-            <h1 className="text-3xl text-center">{t("dashboard.users")}</h1>
+            <h1 className="text-3xl text-center max-sm:text-2xl">{t("dashboard.users")}</h1>
           </div>
-          <div className="center mb-12">
-            <div className="top flex gap-x-3 text-white dark:text-black my-3">
+          <div className="center mb-12 max-sm:text-sm">
+            <div className="top flex gap-x-3 text-white dark:text-black my-3 gap-3 flex-wrap max-sm:flex-col max-sm:items-center">
               <button
                 onClick={blockUsers}
                 className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"
