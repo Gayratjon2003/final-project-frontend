@@ -20,18 +20,7 @@ const DashboardCategories = () => {
   const [categoryUz, setCategoryUz] = useState("");
   const [formStatus, setFormStatus] = useState(false);
   const [createCategory, setCreateCategory] = useState(true);
-  const columns = [
-    { field: "id", headerName: "ID", width: 250 },
-    {
-      field: "name",
-      headerName: t("categoriesDashboard.name"),
-      width: 200,
-    },
-  ];
-  const rows = categoriesData?.map((category) => ({
-    id: category._id,
-    name: category?.name[i18n.language],
-  }));
+
   const deleteUsers = () => {
     dispatch(start());
     const deleteUser = async (id) => {
@@ -220,6 +209,19 @@ const DashboardCategories = () => {
   const onRowsSelectionHandler = (ids) => {
     setSelectedIds(ids);
   };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 250 },
+    {
+      field: "name",
+      headerName: t("categoriesDashboard.name"),
+      width: 200,
+    },
+  ];
+  const rows = categoriesData?.map((category) => ({
+    id: category._id,
+    name: category?.name[i18n.language],
+  }));
   useEffect(() => {
     getData();
   }, []);

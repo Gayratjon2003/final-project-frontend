@@ -35,12 +35,7 @@ const DashboardItems = ({ id }) => {
   const [customFields, setCustomFields] = useState([]);
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
-  const headers = columns?.map((item) => {
-    return {
-      label: item?.headerName,
-      key: item?.field,
-    };
-  });
+
   const checkEmptyValues = () => {
     return name.trim().length > 1 && author.trim().length > 1;
   };
@@ -401,6 +396,13 @@ const DashboardItems = ({ id }) => {
       }
     }
   };
+
+  const headers = columns?.map((item) => {
+    return {
+      label: item?.headerName,
+      key: item?.field,
+    };
+  });
   useEffect(() => {
     getData();
     getTags();
