@@ -49,6 +49,7 @@ input {
     background: url("./assets/images/hero.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
 .hero-box {
     height: calc(100vh - 80px);

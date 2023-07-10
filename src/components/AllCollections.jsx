@@ -50,7 +50,7 @@ const AllCollections = () => {
       <div className="container">
         <div className="All-items-box">
           <div className="top">
-            <h1 className="text-center my-6 text-3xl">{t("allCollections")}</h1>
+            <h1 className="text-center my-6 text-3xl max-sm:text-2xl">{t("allCollections")}</h1>
           </div>
           <div className="center">
             <div className="cards flex w-full justify-between flex-wrap gap-3">

@@ -36,16 +36,16 @@ const LatestItems = () => {
     getData();
   }, []);
   return (
-    <section className="latestItems w-full py-20 bg-white dark:bg-black">
+    <section className="latestItems w-full py-20 bg-white dark:bg-black max-sm:pb-10">
       <div className="container">
         <div className="latestItems-box">
           <div className="top">
-            <h1 className="text-center text-3xl mb-5">
+            <h1 className="text-center text-3xl mb-5 max-sm:text-2xl">
               {t("latestItems.title")}
             </h1>
           </div>
           <div className="center py-4">
-            <div className="cards flex w-full justify-between">
+            <div className="cards flex w-full justify-between flex-wrap gap-3">
               {data?.map((item) => (
                 <Card
                   title={item?.name}
@@ -62,7 +62,7 @@ const LatestItems = () => {
           </div>
           <div className="bottom mt-6 flex items-center justify-center">
             <Link to={routes.ALL_ITEMS}>
-              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase">
+              <button className="px-4 py-3 text-white dark:text-black bg-green-500 dark:bg-white rounded-md uppercase max-sm:text-sm">
                 {t("allItems")}
               </button>
             </Link>

@@ -111,16 +111,16 @@ const Item = () => {
     <div className="item pt-20 dark:bg-black">
       <div className="container">
         <div className="item-box flex flex-col items-center">
-          <div className="top flex justify-between w-full mt-10">
-            <div className="left w-2/5">
+          <div className="top flex justify-between w-full mt-10 max-sm:flex-col max-sm:gap-y-2">
+            <div className="left w-2/5 max-sm:w-full">
               <img
                 src={data?.image?.url || noImage}
                 alt="Book"
                 className="object-cover"
               />
             </div>
-            <div className="right w-3/5 ml-10">
-              <div className="p-4">
+            <div className="right w-3/5 ml-10 max-sm:w-full max-sm:m-0">
+              <div className="p-4 max-sm:p-0">
                 <div className="top">
                   <Link
                     to={`/collection/${data?.collections?._id}`}
@@ -142,7 +142,7 @@ const Item = () => {
                     {t("itemId.added")} {convertTimestamp(data?.publishedAt)}{" "}
                     {t("itemId.by")} "{data?.addedBy?.name}"
                   </p>
-                  <div className="extra-fields flex flex-col flex-wrap">
+                  <div className="extra-fields flex flex-col flex-wrap mb-3">
                     {extraFields?.map((item, id) => (
                       <div key={id}>
                         <span className="mr-2 capitalize">
@@ -177,7 +177,7 @@ const Item = () => {
               </div>
             </div>
           </div>
-          <div className="bottom w-1/2 mt-20">
+          <div className="bottom w-1/2 mt-20 max-sm:w-full max-sm:mt-10">
             <div className="comments">
               <h2 className="mb-3">
                 {t("replies")}: {data?.comments?.length}
@@ -210,7 +210,7 @@ const Item = () => {
                     />
                     <button
                       onClick={handleSendComment}
-                      className="text-white dark:text-black bg-green-500 dark:bg-white px-4 py-3 rounded-md"
+                      className="text-white dark:text-black bg-green-500 dark:bg-white px-4 py-3 rounded-md max-sm:text-sm"
                     >
                       Send
                     </button>

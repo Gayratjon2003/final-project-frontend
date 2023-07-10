@@ -424,12 +424,12 @@ const DashboardItems = ({ id }) => {
   }, [formEdit, itemsFields, fields]);
 
   return (
-    <section className="pt-20 dashboard-users">
+    <section className="pt-20 dashboard-users max-sm:pt-0">
       <div className="container">
         <div className="dashboard-users-box">
           <div className="center mb-12">
             {isOwner && (
-              <div className="top flex gap-x-3 text-white dark:text-black my-3">
+              <div className="top flex gap-3 text-white dark:text-black my-3 flex-wrap max-sm:flex-col max-sm:items-center">
                 <button
                   onClick={deleteItems}
                   className="px-4 py-3 bg-green-500 dark:bg-white rounded-md uppercase"

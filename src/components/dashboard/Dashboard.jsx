@@ -12,7 +12,7 @@ const Dashboard = () => {
     <section className="pt-20 dashboard">
       <div className="container">
         <div className="dashboard-box my-10">
-          <ul className="flex items-center justify-center flex-col gap-y-3">
+          <ul className="flex items-center justify-center flex-col gap-y-3 max-sm:text-center">
             {user?.isAdmin && (
               <>
                 <li className="text-3xl hover:text-green-500">

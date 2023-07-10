@@ -13,13 +13,13 @@ const Card = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className="card flex min-w-[350px] w-[32%] shadow-cardLight dark:shadow-cardDark">
+    <div className="card flex min-w-[350px] w-[32%] shadow-cardLight dark:shadow-cardDark max-md:w-full max-md:min-w-full">
       <div className="left overflow-hidden">
         <Link to={itemLink}>
           <img
             src={img}
             alt={title}
-            className="w-[180px] min-h-[180px] max-h-[200px] object-cover"
+            className="w-[180px] min-h-[180px] max-h-[200px] object-cover max-sm:w-[140px]"
           />
         </Link>
       </div>
@@ -36,10 +36,10 @@ const Card = ({
             </Link>
           </div>
           <div>
-            <p>
+            <p className="max-sm:text-sm">
               {t("latestItems.addedBy")} {addedBy}
             </p>
-            <p>
+            <p className="max-sm:text-sm">
               {t("latestItems.on")} <code> {createdAt}</code>
             </p>
           </div>
